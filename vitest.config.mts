@@ -6,5 +6,11 @@ export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   test: {
     environment: 'jsdom',
+    coverage: {
+      include: ['**/*.tsx'],
+      exclude: ['**/*.test.tsx', '**/node_modules/**', '**/`*.spec.tsx', 'src/__test__/setup-test.ts'],
+      provider: 'v8',
+      reporter: ['text'],
+    },
   },
 });
