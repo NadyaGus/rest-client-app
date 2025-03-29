@@ -35,7 +35,7 @@ export const Header = () => {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography component="h1" variant="h6" sx={{ my: 2 }}>
         RESTful Client
       </Typography>
 
@@ -60,7 +60,7 @@ export const Header = () => {
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="h1" sx={{ flexGrow: 1 }}>
             RESTful Client
           </Typography>
 
