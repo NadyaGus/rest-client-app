@@ -17,6 +17,8 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { ToggleLanguage } from './toggleLanguage';
+
 const drawerWidth = 240;
 
 export const Header = () => {
@@ -36,7 +38,9 @@ export const Header = () => {
       <Typography variant="h6" sx={{ my: 2 }}>
         RESTful Client
       </Typography>
+
       <Divider />
+
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
@@ -59,6 +63,11 @@ export const Header = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             RESTful Client
           </Typography>
+
+          <Box sx={{ mr: 3 }}>
+            <ToggleLanguage />
+          </Box>
+
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -68,6 +77,7 @@ export const Header = () => {
           >
             <MenuIcon />
           </IconButton>
+
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
               <Button key={item} sx={{ color: '#fff' }}>
@@ -77,6 +87,7 @@ export const Header = () => {
           </Box>
         </Toolbar>
       </AppBar>
+
       <nav>
         <Drawer
           anchor="right"
@@ -94,6 +105,7 @@ export const Header = () => {
           {drawer}
         </Drawer>
       </nav>
+
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
       </Box>
