@@ -4,5 +4,5 @@ import { expect, test } from 'vitest';
 
 test('Page', () => {
   render(<Home />);
-  expect(screen.findByText('Home')).toBeTruthy();
+  expect(screen.findByText('RESTful Client')).toBeTruthy();
 });
