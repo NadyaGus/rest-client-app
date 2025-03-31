@@ -24,7 +24,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ThemeProvider theme={theme}>
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
               <Header />
-              {children}
+              <Box
+                component={'main'}
+                sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flexGrow: 1 }}
+              >
+                {children}
+              </Box>
               <Footer />
             </Box>
           </ThemeProvider>

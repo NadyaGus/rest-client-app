@@ -3,11 +3,11 @@ export const ROUTES: Record<string, { href: string; title: string }> = {
     href: '/',
     title: 'Home',
   },
-  'Sign in': {
+  signIn: {
     href: '/sign-in',
     title: 'Sign in',
   },
-  'Sign up': {
+  signUp: {
     href: '/sign-up',
     title: 'Sign up',
   },

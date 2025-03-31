@@ -27,7 +27,15 @@ export const Header = () => {
   const checkAuth = false; // TODO: check auth
 
   const navItems = checkAuth ? ['Logout'] : ['Sign in', 'Sign up'];
-  const getRouteURL = (route: string) => (route === 'Logout' ? '/' : ROUTES[route].href);
+
+  const getRouteURL = (route: string) => {
+    if (route === 'Logout') {
+      return ROUTES.signIn.href;
+    } else if (route === 'Sign up') {
+      return ROUTES.signUp.href;
+    }
+    return ROUTES.signIn.href;
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -104,7 +112,7 @@ export const Header = () => {
         {drawer}
       </Drawer>
 
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ p: 0 }}>
         <Toolbar />
       </Box>
     </Box>
