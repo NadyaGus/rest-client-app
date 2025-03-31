@@ -15,7 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ToggleLanguage } from '../toggleLanguage/toggleLanguage';
 
@@ -23,11 +23,11 @@ const drawerWidth = 240;
 
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const checkAuth = false; // TODO: check auth
 
   const navItems = checkAuth ? ['Logout'] : ['Sign in', 'Sign up'];
-
   const getRouteURL = (route: string) => {
     if (route === 'Logout') {
       return ROUTES.signIn.href;
@@ -36,6 +36,15 @@ export const Header = () => {
     }
     return ROUTES.signIn.href;
   };
+
+  const handleScroll = () => {
+    setScrolled(window.scrollY > 10);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -64,12 +73,15 @@ export const Header = () => {
   );
 
   return (
-    <Box component={'header'} sx={{ display: 'flex' }}>
+    <Box component={'header'} sx={{ display: 'flex', zIndex: 1 }}>
       <CssBaseline />
-      <AppBar component="nav">
+      <AppBar
+        component="nav"
+        sx={{ backgroundColor: scrolled ? '#101010' : '#202020', transition: 'background-color 0.3s ease' }}
+      >
         <Toolbar>
           <Typography variant="h6" component="h1" sx={{ flexGrow: 1 }}>
-            RESTful Client
+            <Link href={ROUTES.Home.href}>RESTful Client</Link>
           </Typography>
 
           <Box sx={{ mr: 3 }}>
