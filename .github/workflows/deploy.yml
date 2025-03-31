@@ -6,13 +6,15 @@ env:
 
 on:
   push:
-    branches: [$default-branch]
+    branches:
+      - develop
 
 jobs:
   ci:
     uses: ./.github/workflows/ci.yml
 
   deploy:
+    needs: ci
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
