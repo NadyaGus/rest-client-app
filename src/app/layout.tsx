@@ -1,9 +1,11 @@
+import { Footer } from '@/components/footer/Footer';
 import { Header } from '@/components/header/Header';
 import theme from '@/theme';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
 import './globals.css';
 
+import { Box } from '@mui/material';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import { Roboto } from 'next/font/google';
 
@@ -20,8 +22,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <AppRouterCacheProvider options={{ key: 'css' }}>
           <ThemeProvider theme={theme}>
-            <Header />
-            {children}
+            <Box>
+              <Header />
+              {children}
+              <Footer />
+            </Box>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
