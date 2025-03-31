@@ -2,7 +2,8 @@ import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
 
 export const Footer = () => {
-  const bgColor = '#424242';
+  const bgColor = '#303030';
+
   return (
     <Box
       component="footer"
