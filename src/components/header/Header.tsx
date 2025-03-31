@@ -34,7 +34,7 @@ export const Header = () => {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <Box component={'nav'} onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography component="h1" variant="h6" sx={{ my: 2 }}>
         RESTful Client
       </Typography>
@@ -56,7 +56,7 @@ export const Header = () => {
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box component={'header'} sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
@@ -73,7 +73,7 @@ export const Header = () => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ display: { sm: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
@@ -88,25 +88,23 @@ export const Header = () => {
         </Toolbar>
       </AppBar>
 
-      <nav>
-        <Drawer
-          anchor="right"
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </nav>
+      <Drawer
+        anchor="right"
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true,
+        }}
+        sx={{
+          display: { xs: 'block', sm: 'none' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+        }}
+      >
+        {drawer}
+      </Drawer>
 
-      <Box component="main" sx={{ p: 3 }}>
+      <Box sx={{ p: 3 }}>
         <Toolbar />
       </Box>
     </Box>
