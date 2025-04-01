@@ -25,9 +25,9 @@ export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const checkAuth = false; // TODO: check auth
+  const isAuthenticatedUser = false; // TODO: check auth
 
-  const navItems = checkAuth ? ['Logout'] : ['Sign in', 'Sign up'];
+  const navItems = isAuthenticatedUser ? ['Logout'] : ['Sign in', 'Sign up'];
   const getRouteURL = (route: string) => {
     if (route === 'Logout') {
       return ROUTES.signIn.href;
