@@ -21,13 +21,17 @@ export const Footer = () => {
       </Typography>
 
       <Typography variant="body2" color="text.secondary" align="center">
-        {'Copyright © '}
-        The Redux Rangers {new Date().getFullYear()}
-        {'.'}
+        <Link href="https://github.com/orgs/The-Redux-Rangers/people" target="_blank">
+          {'Copyright © '}
+          The Redux Rangers {new Date().getFullYear()}
+          {'.'}
+        </Link>
       </Typography>
 
       <Typography variant="body2" color="text.secondary" align="center">
-        <Link href="https://rs.school/">RS-School</Link>
+        <Link href="https://rs.school/" target="_blank">
+          RS-School
+        </Link>
       </Typography>
     </Box>
   );
