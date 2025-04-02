@@ -17,7 +17,7 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-import { ToggleLanguage } from '../toggleLanguage/toggleLanguage';
+import { ToggleLanguage } from './toggle-language';
 
 const drawerWidth = 240;
 
