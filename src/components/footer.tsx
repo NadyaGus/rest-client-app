@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export const Footer = () => {
@@ -8,11 +9,11 @@ export const Footer = () => {
     <Box
       component="footer"
       sx={{
-        py: 3,
-        px: 2,
+        p: 2,
         mt: 'auto',
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
         backgroundColor: bgColor,
       }}
     >
@@ -28,11 +29,11 @@ export const Footer = () => {
         </Link>
       </Typography>
 
-      <Typography variant="body2" color="text.secondary" align="center">
+      <Box sx={{ display: 'block', width: '40px', height: '40px' }}>
         <Link href="https://rs.school/" target="_blank">
-          RS-School
+          <Image src="rss-logo.svg" alt="RS-School Logo" width={40} height={40} />
         </Link>
-      </Typography>
+      </Box>
     </Box>
   );
 };
