@@ -26,10 +26,8 @@ export const Header = () => {
   const getRouteURL = (route: string) => {
     if (route === logOut) {
       return ROUTES.home.href;
-    } else if (route === ROUTES.signUp.title) {
-      return ROUTES.signUp.href;
     }
-    return ROUTES.signIn.href;
+    return route === ROUTES.signUp.title ? ROUTES.signUp.href : ROUTES.signIn.href;
   };
 
   const handleScroll = () => {

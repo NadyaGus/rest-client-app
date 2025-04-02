@@ -1,6 +1,13 @@
-type Routes = 'home' | 'signIn' | 'signUp' | 'restClient' | 'variables' | 'history';
+enum Routes {
+  home = 'home',
+  signIn = 'signIn',
+  signUp = 'signUp',
+  restClient = 'restClient',
+  variables = 'variables',
+  history = 'history',
+}
 
-export const ROUTES: Record<Routes, { href: string; title: string }> = {
+export const ROUTES: Record<`${Routes}`, { href: string; title: string }> = {
   home: {
     href: '/',
     title: 'Home',
