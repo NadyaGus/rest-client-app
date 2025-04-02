@@ -4,11 +4,11 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useState } from 'react';
 
 export function ToggleLanguage() {
-  const [alignment, setAlignment] = useState('english');
+  const [language, setLanguage] = useState('en');
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     if (newAlignment !== null) {
-      setAlignment(newAlignment);
+      setLanguage(newAlignment);
       // TODO: add changing language
     }
   };
@@ -17,13 +17,13 @@ export function ToggleLanguage() {
     <ToggleButtonGroup
       size="small"
       color="primary"
-      value={alignment}
+      value={language}
       exclusive
       onChange={handleChange}
       aria-label="Language"
     >
-      <ToggleButton value="english">EN</ToggleButton>
-      <ToggleButton value="russian">RU</ToggleButton>
+      <ToggleButton value="en">EN</ToggleButton>
+      <ToggleButton value="ru">RU</ToggleButton>
     </ToggleButtonGroup>
   );
 }
