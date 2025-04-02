@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react';
 import { ToggleLanguage } from './toggle-language';
 
 const drawerWidth = 240;
+const logOut = 'Logout';
 
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -27,11 +28,11 @@ export const Header = () => {
 
   const isAuthenticatedUser = false; // TODO: check auth
 
-  const navItems = isAuthenticatedUser ? ['Logout'] : ['Sign in', 'Sign up'];
+  const navItems = isAuthenticatedUser ? [logOut] : [ROUTES.signIn.title, ROUTES.signUp.title];
   const getRouteURL = (route: string) => {
-    if (route === 'Logout') {
-      return ROUTES.signIn.href;
-    } else if (route === 'Sign up') {
+    if (route === logOut) {
+      return ROUTES.home.href;
+    } else if (route === ROUTES.signUp.title) {
       return ROUTES.signUp.href;
     }
     return ROUTES.signIn.href;
@@ -81,7 +82,7 @@ export const Header = () => {
       >
         <Toolbar>
           <Typography variant="h6" component="h1" sx={{ flexGrow: 1 }}>
-            <Link href={ROUTES.Home.href}>RESTful Client</Link>
+            <Link href={ROUTES.home.href}>RESTful Client</Link>
           </Typography>
 
           <Box sx={{ mr: 3 }}>

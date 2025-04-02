@@ -6,11 +6,7 @@ export default function Home() {
   const isAuthenticatedUser = false; // TODO: check auth
   const userName = 'John Doe';
 
-  const links = [
-    { href: ROUTES.restClient.href, title: ROUTES.restClient.title },
-    { href: ROUTES.variables.href, title: ROUTES.variables.title },
-    { href: ROUTES.history.href, title: ROUTES.history.title },
-  ];
+  const links = [ROUTES.restClient, ROUTES.variables, ROUTES.history];
 
   return (
     <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>

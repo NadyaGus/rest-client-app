@@ -1,7 +1,7 @@
-type Routes = 'Home' | 'signIn' | 'signUp' | 'restClient' | 'variables' | 'history';
+type Routes = 'home' | 'signIn' | 'signUp' | 'restClient' | 'variables' | 'history';
 
 export const ROUTES: Record<Routes, { href: string; title: string }> = {
-  Home: {
+  home: {
     href: '/',
     title: 'Home',
   },
