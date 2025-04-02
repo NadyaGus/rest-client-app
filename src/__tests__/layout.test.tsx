@@ -2,11 +2,6 @@ import RootLayout from '@/app/layout';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
 
-vi.mock('@/components/header/Header', () => ({
-  __esModule: true,
-  Header: () => <header data-testid="header">Mock Header</header>,
-}));
-
 vi.mock('next/font/google', () => ({
   Roboto: () => ({
     className: 'mock-roboto',
@@ -33,7 +28,7 @@ describe('RootLayout', () => {
       </RootLayout>
     );
 
-    expect(screen.getByTestId('header')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'RESTful Client' })).toBeInTheDocument();
     expect(screen.getByTestId('content')).toBeInTheDocument();
 
     expect(screen.getByTestId('theme-provider')).toBeInTheDocument();
