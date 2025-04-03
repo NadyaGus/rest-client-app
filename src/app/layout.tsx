@@ -1,9 +1,13 @@
+import { Footer } from '@/components/footer';
+import { Header } from '@/components/header';
 import theme from '@/theme';
+
+import './globals.css';
+
+import { Box } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import { Roboto } from 'next/font/google';
-
-import './globals.css';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -17,7 +21,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={roboto.className}>
       <body>
         <AppRouterCacheProvider options={{ key: 'css' }}>
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          <ThemeProvider theme={theme}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+              <Header />
+              <Box
+                component={'main'}
+                sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flexGrow: 1 }}
+              >
+                {children}
+              </Box>
+              <Footer />
+            </Box>
+          </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
