@@ -23,19 +23,19 @@ export const Header = () => {
   const { user, loading, signOut } = useAuth();
   const router = useRouter();
 
-  const navItems = user ? [ROUTES.signOut.title] : [ROUTES.signIn.title, ROUTES.signUp.title];
+  const navItems = user ? [ROUTES.main.title, ROUTES.signOut.title] : [ROUTES.signIn.title, ROUTES.signUp.title];
 
   const getRouteURL = (route: string) => {
     if (route === ROUTES.signOut.title) {
       return '#';
     }
-    return Object.values(ROUTES).find((r) => r.title === route)?.href ?? ROUTES.home.href;
+    return Object.values(ROUTES).find((r) => r.title === route)?.href ?? ROUTES.main.href;
   };
 
   const handleClick = async (route: string) => {
     if (route === ROUTES.signOut.title) {
       await signOut();
-      router.push(ROUTES.home.href);
+      router.push(ROUTES.main.href);
       router.refresh();
     }
   };
@@ -62,7 +62,7 @@ export const Header = () => {
       >
         <Toolbar>
           <Typography variant="h6" component="h1" sx={{ flexGrow: 1 }}>
-            <Link href={ROUTES.home.href}>RESTful Client</Link>
+            <Link href={ROUTES.main.href}>RESTful Client</Link>
           </Typography>
 
           <Box sx={{ mr: 3 }}>
