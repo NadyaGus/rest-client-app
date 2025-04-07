@@ -33,3 +33,6 @@ export const ROUTES: Record<`${Routes}`, { href: string; title: string }> = {
     title: 'History',
   },
 } as const;
+
+export const PUBLIC_ROUTES = [ROUTES.signIn.href, ROUTES.signUp.href, ROUTES.home.href];
+export const AUTH_ROUTES = [ROUTES.signIn.href, ROUTES.signUp.href];
