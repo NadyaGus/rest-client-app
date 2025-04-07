@@ -1,33 +1,43 @@
 'use client';
 import { ROUTES } from '@/constants';
+import { useAuth } from '@/hooks/useAuth';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import IconButton from '@mui/material/IconButton';
+import Skeleton from '@mui/material/Skeleton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { HeaderDrawer } from './header-drawer';
 import { ToggleLanguage } from './toggle-language';
 
-const logOut = 'Logout';
-
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { user, loading, signOut } = useAuth();
+  const router = useRouter();
 
-  const isAuthenticatedUser = false; // TODO: check auth
+  const navItems = user ? [ROUTES.signOut.title] : [ROUTES.signIn.title, ROUTES.signUp.title];
 
-  const navItems = isAuthenticatedUser ? [logOut] : [ROUTES.signIn.title, ROUTES.signUp.title];
   const getRouteURL = (route: string) => {
-    if (route === logOut) {
-      return ROUTES.home.href;
+    if (route === ROUTES.signOut.title) {
+      return '#';
     }
-    return route === ROUTES.signUp.title ? ROUTES.signUp.href : ROUTES.signIn.href;
+    return Object.values(ROUTES).find((r) => r.title === route)?.href ?? ROUTES.home.href;
+  };
+
+  const handleClick = async (route: string) => {
+    if (route === ROUTES.signOut.title) {
+      await signOut();
+      router.push(ROUTES.home.href);
+      router.refresh();
+    }
   };
 
   const handleScroll = () => {
@@ -69,13 +79,21 @@ export const Header = () => {
             <MenuIcon />
           </IconButton>
 
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                <Link href={getRouteURL(item)}>{item}</Link>
-              </Button>
-            ))}
-          </Box>
+          {loading && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', p: 1 }}>
+              <Skeleton variant="text" sx={{ fontSize: '1rem', width: '65px' }} />
+            </Box>
+          )}
+
+          {!loading && (
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              {navItems.map((item) => (
+                <Button key={item} sx={{ color: '#fff' }} onClick={() => handleClick(item)}>
+                  <Link href={getRouteURL(item)}>{item}</Link>
+                </Button>
+              ))}
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
 
@@ -84,6 +102,7 @@ export const Header = () => {
         mobileOpen={mobileOpen}
         navItems={navItems}
         getRouteURL={getRouteURL}
+        onItemClick={handleClick}
       />
 
       <Box sx={{ p: 0 }}>

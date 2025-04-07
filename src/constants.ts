@@ -2,6 +2,7 @@ enum Routes {
   home = 'home',
   signIn = 'signIn',
   signUp = 'signUp',
+  signOut = 'signOut',
   restClient = 'restClient',
   variables = 'variables',
   history = 'history',
@@ -19,6 +20,10 @@ export const ROUTES: Record<`${Routes}`, { href: string; title: string }> = {
   signUp: {
     href: '/sign-up',
     title: 'Sign up',
+  },
+  signOut: {
+    href: '/sign-out',
+    title: 'Sign out',
   },
   restClient: {
     href: '/rest-client',
