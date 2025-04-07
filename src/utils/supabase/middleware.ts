@@ -36,16 +36,16 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user && !PUBLIC_ROUTES.includes(request.nextUrl.pathname)) {
-    const url = request.nextUrl.clone();
-    url.pathname = ROUTES.signIn.href;
-    return NextResponse.redirect(url);
+  const currentPath = request.nextUrl.pathname;
+  const isPublicRoute = PUBLIC_ROUTES.includes(currentPath);
+  const isAuthRoute = AUTH_ROUTES.includes(currentPath);
+
+  if (!user && !isPublicRoute) {
+    return NextResponse.redirect(new URL(ROUTES.main.href, request.url));
   }
 
-  if (user && AUTH_ROUTES.includes(request.nextUrl.pathname)) {
-    const url = request.nextUrl.clone();
-    url.pathname = ROUTES.main.href;
-    return NextResponse.redirect(url);
+  if (user && isAuthRoute) {
+    return NextResponse.redirect(new URL(ROUTES.main.href, request.url));
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.
