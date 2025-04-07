@@ -84,6 +84,11 @@ export default function SignUpPage() {
           required
           autoComplete="new-password"
           disabled={loading}
+          slotProps={{
+            htmlInput: {
+              'data-testid': 'password',
+            },
+          }}
         />
 
         <TextField
@@ -94,6 +99,11 @@ export default function SignUpPage() {
           required
           autoComplete="new-password"
           disabled={loading}
+          slotProps={{
+            htmlInput: {
+              'data-testid': 'confirmPassword',
+            },
+          }}
         />
 
         <Button type="submit" variant="contained" size="large" disabled={loading}>
