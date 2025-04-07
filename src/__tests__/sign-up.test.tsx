@@ -48,10 +48,10 @@ describe('SignUpPage', () => {
       target: { value: 'test@example.com' },
     });
     fireEvent.change(screen.getByTestId('password'), {
-      target: { value: 'correct-password' },
+      target: { value: 'correct-P@ssw0rd' },
     });
     fireEvent.change(screen.getByTestId('confirmPassword'), {
-      target: { value: 'correct-password' },
+      target: { value: 'correct-P@ssw0rd' },
     });
 
     const submitButton = screen.getByRole('button', { name: /^sign up$/i });
@@ -60,7 +60,7 @@ describe('SignUpPage', () => {
     await waitFor(() => {
       expect(mockSignUp).toHaveBeenCalledWith({
         email: 'test@example.com',
-        password: 'correct-password',
+        password: 'correct-P@ssw0rd',
       });
     });
 
@@ -74,7 +74,7 @@ describe('SignUpPage', () => {
       target: { value: 'test@example.com' },
     });
     fireEvent.change(screen.getByTestId('password'), {
-      target: { value: 'correct-password' },
+      target: { value: 'correct-P@ssw0rd' },
     });
     fireEvent.change(screen.getByTestId('confirmPassword'), {
       target: { value: 'another-password' },
@@ -84,7 +84,7 @@ describe('SignUpPage', () => {
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText('Passwords do not match')).toBeInTheDocument();
+      expect(screen.getByText("Passwords don't match")).toBeInTheDocument();
     });
   });
 
@@ -105,10 +105,10 @@ describe('SignUpPage', () => {
       target: { value: 'test@example.com' },
     });
     fireEvent.change(screen.getByTestId('password'), {
-      target: { value: 'correct-password' },
+      target: { value: 'correct-P@ssw0rd' },
     });
     fireEvent.change(screen.getByTestId('confirmPassword'), {
-      target: { value: 'correct-password' },
+      target: { value: 'correct-P@ssw0rd' },
     });
 
     const submitButton = screen.getByRole('button', { name: /^sign up$/i });
@@ -140,10 +140,10 @@ describe('SignUpPage', () => {
       target: { value: 'test@example.com' },
     });
     fireEvent.change(screen.getByTestId('password'), {
-      target: { value: 'correct-password' },
+      target: { value: 'correct-P@ssw0rd' },
     });
     fireEvent.change(screen.getByTestId('confirmPassword'), {
-      target: { value: 'correct-password' },
+      target: { value: 'correct-P@ssw0rd' },
     });
 
     const submitButton = screen.getByRole('button', { name: /^sign up$/i });

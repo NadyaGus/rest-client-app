@@ -2,9 +2,30 @@
 
 import { ROUTES } from '@/constants';
 import { createClient } from '@/utils/supabase/client';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Box, Button, Container, TextField, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+const signUpSchema = z
+  .object({
+    email: z.string().email('Invalid email address'),
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters')
+      .regex(/[\p{L}]/u, 'Password must contain at least one letter')
+      .regex(/[\p{N}]/u, 'Password must contain at least one digit')
+      .regex(/[\p{P}]/u, 'Password must contain at least one special character'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
+
+type SignUpFormData = z.infer<typeof signUpSchema>;
 
 export default function SignUpPage() {
   const supabase = createClient();
@@ -12,25 +33,21 @@ export default function SignUpPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpFormData>({
+    resolver: zodResolver(signUpSchema),
+  });
+
+  const onSubmit = async (data: SignUpFormData) => {
     setLoading(true);
     setError(null);
 
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-    const confirmPassword = formData.get('confirmPassword') as string;
-
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      setLoading(false);
-      return;
-    }
-
     const { error } = await supabase.auth.signUp({
-      email,
-      password,
+      email: data.email,
+      password: data.password,
     });
 
     if (error) {
@@ -46,7 +63,7 @@ export default function SignUpPage() {
     <Container maxWidth="sm">
       <Box
         component="form"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -67,23 +84,27 @@ export default function SignUpPage() {
 
         <TextField
           id="email"
-          name="email"
           label="Email"
           type="email"
           required
           autoComplete="email"
           autoFocus
           disabled={loading}
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          {...register('email')}
         />
 
         <TextField
           id="password"
-          name="password"
           label="Password"
           type="password"
           required
           autoComplete="new-password"
           disabled={loading}
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          {...register('password')}
           slotProps={{
             htmlInput: {
               'data-testid': 'password',
@@ -93,12 +114,14 @@ export default function SignUpPage() {
 
         <TextField
           id="confirmPassword"
-          name="confirmPassword"
           label="Confirm Password"
           type="password"
           required
           autoComplete="new-password"
           disabled={loading}
+          error={!!errors.confirmPassword}
+          helperText={errors.confirmPassword?.message}
+          {...register('confirmPassword')}
           slotProps={{
             htmlInput: {
               'data-testid': 'confirmPassword',
