@@ -2,9 +2,19 @@
 
 import { ROUTES } from '@/constants';
 import { createClient } from '@/utils/supabase/client';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Box, Button, Container, TextField, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+const signInSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(1, 'Password is required'),
+});
+
+type SignInFormData = z.infer<typeof signInSchema>;
 
 export default function LoginPage() {
   const supabase = createClient();
@@ -12,18 +22,21 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInFormData>({
+    resolver: zodResolver(signInSchema),
+  });
+
+  const onSubmit = async (data: SignInFormData) => {
     setLoading(true);
     setError(null);
 
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-
     const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+      email: data.email,
+      password: data.password,
     });
 
     if (error) {
@@ -39,8 +52,8 @@ export default function LoginPage() {
     <Container maxWidth="sm">
       <Box
         component="form"
-        onSubmit={handleSubmit}
         noValidate
+        onSubmit={handleSubmit(onSubmit)}
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -61,21 +74,25 @@ export default function LoginPage() {
 
         <TextField
           id="email"
-          name="email"
           label="Email"
           type="email"
           autoComplete="email"
           autoFocus
           disabled={loading}
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          {...register('email')}
         />
 
         <TextField
           id="password"
-          name="password"
           label="Password"
           type="password"
           autoComplete="current-password"
           disabled={loading}
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          {...register('password')}
         />
 
         <Button type="submit" variant="contained" size="large" disabled={loading}>
