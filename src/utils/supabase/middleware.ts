@@ -44,7 +44,7 @@ export async function updateSession(request: NextRequest) {
 
   if (user && AUTH_ROUTES.includes(request.nextUrl.pathname)) {
     const url = request.nextUrl.clone();
-    url.pathname = ROUTES.home.href;
+    url.pathname = ROUTES.main.href;
     return NextResponse.redirect(url);
   }
 
