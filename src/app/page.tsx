@@ -13,7 +13,8 @@ export default function Home() {
   return (
     <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
       <Typography variant="h1" component="h1" sx={{ m: 2, fontSize: '3rem', textAlign: 'center' }}>
-        {user ? 'Welcome Back, ' + userName + '!' : 'Welcome to RESTful Client App.'}
+        {loading && <Skeleton variant="text" sx={{ fontSize: '3rem', width: '400px' }} />}
+        {!loading && (user ? 'Welcome Back, ' + userName + '!' : 'Welcome to RESTful Client App.')}
       </Typography>
       <Typography component={'p'}>A lightweight client for RESTful APIs</Typography>
 
