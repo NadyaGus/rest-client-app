@@ -20,9 +20,7 @@ export default function Home() {
 
       {loading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, gap: 2 }}>
-          {[...Array(3)].map((_, index) => (
-            <Skeleton key={index} variant="text" sx={{ fontSize: '1rem', width: '100px' }} />
-          ))}
+          <Skeleton variant="text" sx={{ fontSize: '1rem', width: '300px' }} />
         </Box>
       )}
 
