@@ -40,6 +40,7 @@ export default function LoginPage() {
       <Box
         component="form"
         onSubmit={handleSubmit}
+        noValidate
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -63,7 +64,6 @@ export default function LoginPage() {
           name="email"
           label="Email"
           type="email"
-          required
           autoComplete="email"
           autoFocus
           disabled={loading}
@@ -74,7 +74,6 @@ export default function LoginPage() {
           name="password"
           label="Password"
           type="password"
-          required
           autoComplete="current-password"
           disabled={loading}
         />

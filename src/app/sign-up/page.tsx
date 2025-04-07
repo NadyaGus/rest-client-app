@@ -63,6 +63,7 @@ export default function SignUpPage() {
     <Container maxWidth="sm">
       <Box
         component="form"
+        noValidate
         onSubmit={handleSubmit(onSubmit)}
         sx={{
           display: 'flex',
@@ -86,7 +87,6 @@ export default function SignUpPage() {
           id="email"
           label="Email"
           type="email"
-          required
           autoComplete="email"
           autoFocus
           disabled={loading}
@@ -99,7 +99,6 @@ export default function SignUpPage() {
           id="password"
           label="Password"
           type="password"
-          required
           autoComplete="new-password"
           disabled={loading}
           error={!!errors.password}
@@ -116,7 +115,6 @@ export default function SignUpPage() {
           id="confirmPassword"
           label="Confirm Password"
           type="password"
-          required
           autoComplete="new-password"
           disabled={loading}
           error={!!errors.confirmPassword}
