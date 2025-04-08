@@ -31,7 +31,7 @@ export const Footer = () => {
 
       <Box sx={{ display: 'block', width: '40px', height: '40px' }}>
         <Link href="https://rs.school/" target="_blank">
-          <Image src="rss-logo.svg" alt="RS-School Logo" width={40} height={40} />
+          <Image src="/rss-logo.svg" alt="RS-School Logo" width={40} height={40} />
         </Link>
       </Box>
     </Box>
