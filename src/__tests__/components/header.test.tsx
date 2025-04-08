@@ -1,10 +1,24 @@
 import { Header } from '@/components/header';
 import { render, screen } from '@testing-library/react';
-import { describe } from 'node:test';
-import { test, expect } from 'vitest';
+import { describe, test, expect, vi } from 'vitest';
 
-test('Header Component', () => {
-  describe('renders the header with title', () => {
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    refresh: vi.fn(),
+  }),
+}));
+
+vi.mock('@/hooks/useAuth', () => ({
+  useAuth: () => ({
+    user: null,
+    loading: false,
+    signOut: vi.fn(),
+  }),
+}));
+
+describe('Header Component', () => {
+  test('renders the header with title', () => {
     render(<Header />);
     const header = screen.getByRole('heading', { name: 'RESTful Client' });
     expect(header).toBeInTheDocument();

@@ -11,11 +11,18 @@ type HeaderDrawerProps = {
   mobileOpen: boolean;
   navItems: string[];
   getRouteURL: (item: string) => string;
+  onItemClick: (item: string) => void;
 };
 
 const drawerWidth = 240;
 
-export const HeaderDrawer = ({ handleDrawerToggle, mobileOpen, navItems, getRouteURL }: HeaderDrawerProps) => {
+export const HeaderDrawer = ({
+  handleDrawerToggle,
+  mobileOpen,
+  navItems,
+  getRouteURL,
+  onItemClick,
+}: HeaderDrawerProps) => {
   return (
     <Drawer
       anchor="right"
@@ -40,7 +47,7 @@ export const HeaderDrawer = ({ handleDrawerToggle, mobileOpen, navItems, getRout
         <List>
           {navItems.map((item) => (
             <ListItem key={item} disablePadding>
-              <ListItemButton sx={{ textAlign: 'center' }}>
+              <ListItemButton sx={{ textAlign: 'center' }} onClick={() => onItemClick(item)}>
                 <Link href={getRouteURL(item)}>
                   <ListItemText primary={item} />
                 </Link>

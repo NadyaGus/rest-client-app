@@ -9,6 +9,13 @@ vi.mock('next/font/google', () => ({
   }),
 }));
 
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    refresh: vi.fn(),
+  }),
+}));
+
 vi.mock('@mui/material-nextjs/v15-appRouter', () => ({
   AppRouterCacheProvider: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="cache-provider">{children}</div>

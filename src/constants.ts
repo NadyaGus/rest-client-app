@@ -1,16 +1,17 @@
 enum Routes {
-  home = 'home',
+  main = 'main',
   signIn = 'signIn',
   signUp = 'signUp',
+  signOut = 'signOut',
   restClient = 'restClient',
   variables = 'variables',
   history = 'history',
 }
 
 export const ROUTES: Record<`${Routes}`, { href: string; title: string }> = {
-  home: {
+  main: {
     href: '/',
-    title: 'Home',
+    title: 'Main',
   },
   signIn: {
     href: '/sign-in',
@@ -19,6 +20,10 @@ export const ROUTES: Record<`${Routes}`, { href: string; title: string }> = {
   signUp: {
     href: '/sign-up',
     title: 'Sign up',
+  },
+  signOut: {
+    href: '/sign-out',
+    title: 'Sign out',
   },
   restClient: {
     href: '/rest-client',
@@ -33,3 +38,6 @@ export const ROUTES: Record<`${Routes}`, { href: string; title: string }> = {
     title: 'History',
   },
 } as const;
+
+export const AUTH_ROUTES = [ROUTES.signIn.href, ROUTES.signUp.href];
+export const PUBLIC_ROUTES = [ROUTES.main.href, ...AUTH_ROUTES];
