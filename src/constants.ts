@@ -41,3 +41,4 @@ export const ROUTES: Record<`${Routes}`, { href: string; title: string }> = {
 
 export const AUTH_ROUTES = [ROUTES.signIn.href, ROUTES.signUp.href];
 export const PUBLIC_ROUTES = [ROUTES.main.href, ...AUTH_ROUTES];
+export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'];
