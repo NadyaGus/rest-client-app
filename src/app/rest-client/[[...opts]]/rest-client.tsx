@@ -6,7 +6,7 @@ import { Box, Input, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function RestClient({ initMethod, initUrl }: { initMethod?: string; initUrl?: string }) {
+export function RestClient({ initMethod, initUrl }: { initMethod?: string; initUrl?: string }) {
   const router = useRouter();
   const [selectedMethod, setSelectedMethod] = useState(initMethod || HTTP_METHODS[0]);
   const [url, setUrl] = useState(initUrl || '');

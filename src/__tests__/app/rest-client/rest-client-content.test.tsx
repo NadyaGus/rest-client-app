@@ -1,4 +1,4 @@
-import RestClient from '@/app/rest-client/[[...opts]]/rest-client';
+import { RestClientContent } from '@/app/rest-client/[[...opts]]/rest-client-content';
 import { ROUTES } from '@/constants';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
@@ -8,7 +8,7 @@ vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
 }));
 
-describe('RestClient', () => {
+describe('RestClientContent', () => {
   const mockRouter = {
     push: vi.fn(),
   };
@@ -20,17 +20,20 @@ describe('RestClient', () => {
   });
 
   test('renders correctly with initial method', () => {
-    render(<RestClient initMethod="GET" initUrl="https://example.com" />);
+    const url = 'https://example.com';
+    const encodedUrl = 'aHR0cHM6Ly9leGFtcGxlLmNvbQ==';
+    render(<RestClientContent opts={['GET', encodedUrl]} />);
 
     const select = screen.getByRole('combobox');
     const input = screen.getByRole('textbox');
 
     expect(select).toHaveTextContent('GET');
-    expect(input).toHaveValue('https://example.com');
+    expect(input).toHaveValue(url);
   });
 
   test('updates selected method on change', () => {
-    render(<RestClient />);
+    const encodedUrl = 'aHR0cHM6Ly9leGFtcGxlLmNvbQ==';
+    render(<RestClientContent opts={['GET', encodedUrl]} />);
 
     const select = screen.getByRole('combobox');
     fireEvent.mouseDown(select);
@@ -39,11 +42,11 @@ describe('RestClient', () => {
     fireEvent.click(postOption);
 
     expect(select).toHaveTextContent('POST');
-    expect(useRouter().push).toHaveBeenCalledWith('/rest-client/POST');
+    expect(useRouter().push).toHaveBeenCalledWith(`${ROUTES.restClient.href}/POST/${encodedUrl}`);
   });
 
   test('updates URL input value on change', () => {
-    render(<RestClient />);
+    render(<RestClientContent opts={['GET', 'https://example.com']} />);
 
     const input = screen.getByRole('textbox');
     fireEvent.change(input, { target: { value: 'https://example.com' } });
@@ -53,7 +56,8 @@ describe('RestClient', () => {
   });
 
   test('updates the URL in the browser history when method changes', () => {
-    render(<RestClient />);
+    const encodedUrl = 'aHR0cHM6Ly9leGFtcGxlLmNvbQ==';
+    render(<RestClientContent opts={['GET', encodedUrl]} />);
 
     const select = screen.getByRole('combobox');
     fireEvent.mouseDown(select);
@@ -61,6 +65,6 @@ describe('RestClient', () => {
     const putOption = screen.getByText('PUT');
     fireEvent.click(putOption);
 
-    expect(useRouter().push).toHaveBeenCalledWith('/rest-client/PUT');
+    expect(useRouter().push).toHaveBeenCalledWith(`${ROUTES.restClient.href}/PUT/${encodedUrl}`);
   });
 });

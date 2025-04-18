@@ -1,20 +1,21 @@
-import { HTTP_METHODS } from '@/constants';
-import { decodeURIComponentToString } from '@/utils/helpers';
-import { Typography, Box } from '@mui/material';
+'use client';
 
-import RestClient from './rest-client';
+import dynamic from 'next/dynamic';
+import { Suspense, use } from 'react';
 
-export default async function RestClientPage({ params }: { params: Promise<{ opts?: string[] }> }) {
-  const { opts } = await params;
-  const method = opts && HTTP_METHODS.includes(opts[0]) ? opts[0] : HTTP_METHODS[0];
-  const url = opts && opts.length > 1 ? decodeURIComponentToString(opts[1]) : '';
+import Loading from './rest-client-skeleton';
+
+const RestClientContent = dynamic(() => import('./rest-client-content').then((mod) => mod.RestClientContent), {
+  ssr: false,
+  loading: () => <Loading />,
+});
+
+export default function RestClientPage({ params }: { params: Promise<{ opts?: string[] }> }) {
+  const { opts } = use(params);
 
   return (
-    <Box sx={{ p: 3, display: 'flex', alignItems: 'center', flexDirection: 'column', gap: 2 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        REST Client
-      </Typography>
-      <RestClient initMethod={method} initUrl={url} />
-    </Box>
+    <Suspense fallback={<Loading />}>
+      <RestClientContent opts={opts} />
+    </Suspense>
   );
 }
