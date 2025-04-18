@@ -2,7 +2,7 @@ import { HTTP_METHODS } from '@/constants';
 import { decodeURIComponentToString } from '@/utils/helpers';
 import { Typography, Box } from '@mui/material';
 
-import RestClient from './RestClient';
+import RestClient from './rest-client';
 
 export default async function RestClientPage({ params }: { params: Promise<{ opts?: string[] }> }) {
   const { opts } = await params;

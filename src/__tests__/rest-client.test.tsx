@@ -1,4 +1,4 @@
-import RestClient from '@/app/rest-client/[[...opts]]/RestClient';
+import RestClient from '@/app/rest-client/[[...opts]]/rest-client';
 import { ROUTES } from '@/constants';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
