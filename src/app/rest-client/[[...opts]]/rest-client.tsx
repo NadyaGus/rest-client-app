@@ -2,12 +2,14 @@
 
 import { HTTP_METHODS, ROUTES } from '@/constants';
 import { encodeStringToBase64, serializeHeadersQueryString } from '@/utils/helpers';
-import { Box, Input, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { RequestBody } from '../components/RequestBody';
 import { RequestHeaders } from '../components/RequestHeaders';
+import { RequestMethod } from '../components/RequestMethod';
+import { RequestUrl } from '../components/RequestUrl';
 
 export function RestClient({
   initValues,
@@ -21,14 +23,6 @@ export function RestClient({
   const [headers, setHeaders] = useState<Array<{ name: string; value: string }>>(
     initValues.headers || [{ name: '', value: '' }]
   );
-
-  const handleChangeMethod = (event: SelectChangeEvent) => {
-    setSelectedMethod(event.target.value);
-  };
-
-  const handleChangeUrl = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUrl(event.target.value);
-  };
 
   useEffect(() => {
     let updatedUrl = `${ROUTES.restClient.href}/${selectedMethod}`;
@@ -48,15 +42,8 @@ export function RestClient({
   return (
     <Box sx={{ fontFamily: 'monospace', whiteSpace: 'pre', display: 'flex', gap: 2, flexDirection: 'column' }}>
       <Box sx={{ display: 'flex', gap: 2 }}>
-        <Select value={selectedMethod} onChange={handleChangeMethod}>
-          {HTTP_METHODS.map((m) => (
-            <MenuItem key={m} value={m}>
-              {m}
-            </MenuItem>
-          ))}
-        </Select>
-
-        <Input sx={{ width: 800 }} value={url} onChange={handleChangeUrl} autoFocus placeholder="Enter URL" />
+        <RequestMethod method={selectedMethod} onMethodChange={setSelectedMethod} />
+        <RequestUrl url={url} onUrlChange={setUrl} />
       </Box>
 
       <RequestHeaders headers={headers} onHeadersChange={setHeaders} />
