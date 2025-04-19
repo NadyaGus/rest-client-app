@@ -1,7 +1,7 @@
 'use client';
 
 import { HTTP_METHODS, ROUTES } from '@/constants';
-import { encodeStringToBase64, serializeHeadersQueryString } from '@/utils/helpers';
+import { generateRestClientPageUrl } from '@/utils/helpers';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -25,17 +25,13 @@ export function RestClient({
   );
 
   useEffect(() => {
-    let updatedUrl = `${ROUTES.restClient.href}/${selectedMethod}`;
-    if (url) {
-      updatedUrl += `/${encodeStringToBase64(url)}`;
-    }
-    if (body.trim()) {
-      updatedUrl += `/${encodeStringToBase64(body)}`;
-    }
-    const headersQueryString = serializeHeadersQueryString(headers);
-    if (headersQueryString) {
-      updatedUrl += headersQueryString;
-    }
+    const updatedUrl = generateRestClientPageUrl({
+      baseUrl: ROUTES.restClient.href,
+      method: selectedMethod,
+      url,
+      body,
+      headers,
+    });
     window.history.replaceState({}, '', updatedUrl);
   }, [router, selectedMethod, url, body, headers]);
 
