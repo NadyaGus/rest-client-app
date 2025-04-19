@@ -1,6 +1,6 @@
 'use client';
 import { ROUTES } from '@/constants';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/use-auth';
 import { Box, Button, Container, Skeleton, Typography } from '@mui/material';
 import Link from 'next/link';
 
