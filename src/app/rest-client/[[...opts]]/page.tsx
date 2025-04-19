@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
 import { Suspense, use } from 'react';
 
 import Loading from './rest-client-skeleton';
@@ -12,10 +13,11 @@ const RestClientContent = dynamic(() => import('./rest-client-content').then((mo
 
 export default function RestClientPage({ params }: { params: Promise<{ opts?: string[] }> }) {
   const { opts } = use(params);
+  const searchParams = useSearchParams();
 
   return (
     <Suspense fallback={<Loading />}>
-      <RestClientContent opts={opts} />
+      <RestClientContent opts={opts} searchParams={searchParams} />
     </Suspense>
   );
 }

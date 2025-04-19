@@ -8,19 +8,17 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export function RestClient({
-  initMethod,
-  initUrl,
-  initBody,
+  initValues,
 }: {
-  initMethod?: string;
-  initUrl?: string;
-  initBody?: string;
+  initValues: { method: string; url: string; body: string; headers: Array<{ name: string; value: string }> };
 }) {
   const router = useRouter();
-  const [selectedMethod, setSelectedMethod] = useState(initMethod || HTTP_METHODS[0]);
-  const [url, setUrl] = useState(initUrl || '');
-  const [body, setBody] = useState(initBody || '');
-  const [headers, setHeaders] = useState<Array<{ name: string; value: string }>>([{ name: '', value: '' }]);
+  const [selectedMethod, setSelectedMethod] = useState(initValues.method || HTTP_METHODS[0]);
+  const [url, setUrl] = useState(initValues.url || '');
+  const [body, setBody] = useState(initValues.body || '');
+  const [headers, setHeaders] = useState<Array<{ name: string; value: string }>>(
+    initValues.headers || [{ name: '', value: '' }]
+  );
 
   const handleHeaderChange = (index: number, field: 'name' | 'value', value: string) => {
     const newRows = [...headers];
