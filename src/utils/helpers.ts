@@ -31,3 +31,26 @@ export const serializeHeadersQueryString = (headers: Array<{ name: string; value
   });
   return `?${params.toString()}`;
 };
+
+interface GenerateRestClientPageUrlParams {
+  baseUrl: string;
+  method: string;
+  url: string;
+  body: string;
+  headers: Array<{ name: string; value: string }>;
+}
+
+export const generateRestClientPageUrl = ({ baseUrl, method, url, body, headers }: GenerateRestClientPageUrlParams) => {
+  let updatedUrl = `${baseUrl}/${method}`;
+  if (url) {
+    updatedUrl += `/${encodeStringToBase64(url)}`;
+  }
+  if (body.trim()) {
+    updatedUrl += `/${encodeStringToBase64(body)}`;
+  }
+  const headersQueryString = serializeHeadersQueryString(headers);
+  if (headersQueryString) {
+    updatedUrl += headersQueryString;
+  }
+  return updatedUrl;
+};
