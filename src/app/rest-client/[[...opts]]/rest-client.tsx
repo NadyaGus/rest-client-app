@@ -1,7 +1,7 @@
 'use client';
 
 import { HTTP_METHODS, ROUTES } from '@/constants';
-import { encodeStringToBase64 } from '@/utils/helpers';
+import { encodeStringToBase64, serializeHeadersQueryString } from '@/utils/helpers';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, IconButton, Input, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
@@ -20,26 +20,26 @@ export function RestClient({
   const [selectedMethod, setSelectedMethod] = useState(initMethod || HTTP_METHODS[0]);
   const [url, setUrl] = useState(initUrl || '');
   const [body, setBody] = useState(initBody || '');
-  const [headerRows, setHeaderRows] = useState<Array<{ name: string; value: string }>>([{ name: '', value: '' }]);
+  const [headers, setHeaders] = useState<Array<{ name: string; value: string }>>([{ name: '', value: '' }]);
 
   const handleHeaderChange = (index: number, field: 'name' | 'value', value: string) => {
-    const newRows = [...headerRows];
+    const newRows = [...headers];
     newRows[index][field] = value;
-    setHeaderRows(newRows);
+    setHeaders(newRows);
 
     const lastRow = newRows[newRows.length - 1];
     const needNewRow = lastRow.name && lastRow.value;
     if (needNewRow) {
-      setHeaderRows([...newRows, { name: '', value: '' }]);
+      setHeaders([...newRows, { name: '', value: '' }]);
     }
   };
 
   const handleDeleteHeader = (index: number) => {
-    const newRows = headerRows.filter((_, i) => i !== index);
+    const newRows = headers.filter((_, i) => i !== index);
     if (newRows.length === 0) {
       newRows.push({ name: '', value: '' });
     }
-    setHeaderRows(newRows);
+    setHeaders(newRows);
   };
 
   const handleChangeMethod = (event: SelectChangeEvent) => {
@@ -74,8 +74,12 @@ export function RestClient({
     if (body.trim()) {
       updatedUrl += `/${encodeStringToBase64(body)}`;
     }
+    const headersQueryString = serializeHeadersQueryString(headers);
+    if (headersQueryString) {
+      updatedUrl += headersQueryString;
+    }
     window.history.replaceState({}, '', updatedUrl);
-  }, [router, selectedMethod, url, body]);
+  }, [router, selectedMethod, url, body, headers]);
 
   return (
     <Box sx={{ fontFamily: 'monospace', whiteSpace: 'pre', display: 'flex', gap: 2, flexDirection: 'column' }}>
@@ -92,7 +96,7 @@ export function RestClient({
       </Box>
 
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-        {headerRows.map((row, index) => (
+        {headers.map((row, index) => (
           <Box key={index} sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
             <Input
               placeholder="Header name"
@@ -108,7 +112,7 @@ export function RestClient({
             />
             <IconButton
               onClick={() => handleDeleteHeader(index)}
-              disabled={headerRows.length === 1 && !row.name && !row.value}
+              disabled={headers.length === 1 && !row.name && !row.value}
             >
               <DeleteIcon />
             </IconButton>
