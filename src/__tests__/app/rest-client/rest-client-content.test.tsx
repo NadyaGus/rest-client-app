@@ -12,27 +12,34 @@ describe('RestClientContent', () => {
   const mockRouter = {
     push: vi.fn(),
   };
+  const mockReplaceState = vi.fn();
 
   beforeEach(() => {
     cleanup();
     (useRouter as Mock).mockReturnValue(mockRouter);
     vi.clearAllMocks();
+    // Mock window.history.replaceState
+    const originalReplaceState = window.history.replaceState;
+    window.history.replaceState = mockReplaceState;
+    return () => {
+      window.history.replaceState = originalReplaceState;
+    };
   });
 
   test('renders correctly with initial method', () => {
     const url = 'https://example.com';
-    const encodedUrl = 'aHR0cHM6Ly9leGFtcGxlLmNvbQ==';
+    const encodedUrl = 'aHR0cHM6Ly9leGFtcGxlLmNvbQ';
     render(<RestClientContent opts={['GET', encodedUrl]} />);
 
     const select = screen.getByRole('combobox');
-    const input = screen.getByRole('textbox');
+    const urlInput = screen.getByPlaceholderText('Enter URL');
 
     expect(select).toHaveTextContent('GET');
-    expect(input).toHaveValue(url);
+    expect(urlInput).toHaveValue(url);
   });
 
   test('updates selected method on change', () => {
-    const encodedUrl = 'aHR0cHM6Ly9leGFtcGxlLmNvbQ==';
+    const encodedUrl = 'aHR0cHM6Ly9leGFtcGxlLmNvbQ';
     render(<RestClientContent opts={['GET', encodedUrl]} />);
 
     const select = screen.getByRole('combobox');
@@ -42,21 +49,25 @@ describe('RestClientContent', () => {
     fireEvent.click(postOption);
 
     expect(select).toHaveTextContent('POST');
-    expect(useRouter().push).toHaveBeenCalledWith(`${ROUTES.restClient.href}/POST/${encodedUrl}`);
+    expect(mockReplaceState).toHaveBeenCalledWith({}, '', `${ROUTES.restClient.href}/POST/${encodedUrl}`);
   });
 
   test('updates URL input value on change', () => {
     render(<RestClientContent opts={['GET', 'https://example.com']} />);
 
-    const input = screen.getByRole('textbox');
-    fireEvent.change(input, { target: { value: 'https://example.com' } });
+    const urlInput = screen.getByPlaceholderText('Enter URL');
+    fireEvent.change(urlInput, { target: { value: 'https://example.com' } });
 
-    expect(input).toHaveValue('https://example.com');
-    expect(useRouter().push).toHaveBeenLastCalledWith(`${ROUTES.restClient.href}/GET/aHR0cHM6Ly9leGFtcGxlLmNvbQ==`);
+    expect(urlInput).toHaveValue('https://example.com');
+    expect(mockReplaceState).toHaveBeenLastCalledWith(
+      {},
+      '',
+      `${ROUTES.restClient.href}/GET/aHR0cHM6Ly9leGFtcGxlLmNvbQ`
+    );
   });
 
   test('updates the URL in the browser history when method changes', () => {
-    const encodedUrl = 'aHR0cHM6Ly9leGFtcGxlLmNvbQ==';
+    const encodedUrl = 'aHR0cHM6Ly9leGFtcGxlLmNvbQ';
     render(<RestClientContent opts={['GET', encodedUrl]} />);
 
     const select = screen.getByRole('combobox');
@@ -65,6 +76,6 @@ describe('RestClientContent', () => {
     const putOption = screen.getByText('PUT');
     fireEvent.click(putOption);
 
-    expect(useRouter().push).toHaveBeenCalledWith(`${ROUTES.restClient.href}/PUT/${encodedUrl}`);
+    expect(mockReplaceState).toHaveBeenCalledWith({}, '', `${ROUTES.restClient.href}/PUT/${encodedUrl}`);
   });
 });

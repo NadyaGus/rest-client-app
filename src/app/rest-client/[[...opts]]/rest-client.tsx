@@ -66,7 +66,7 @@ export function RestClient({
           ))}
         </Select>
 
-        <Input sx={{ width: 800 }} value={url} onChange={handleChangeUrl} autoFocus />
+        <Input sx={{ width: 800 }} value={url} onChange={handleChangeUrl} autoFocus placeholder="Enter URL" />
       </Box>
 
       <TextField
