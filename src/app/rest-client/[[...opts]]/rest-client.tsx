@@ -2,7 +2,7 @@
 
 import { HTTP_METHODS, ROUTES } from '@/constants';
 import { encodeStringToBase64 } from '@/utils/helpers';
-import { Box, Input, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Box, Input, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -10,6 +10,7 @@ export function RestClient({ initMethod, initUrl }: { initMethod?: string; initU
   const router = useRouter();
   const [selectedMethod, setSelectedMethod] = useState(initMethod || HTTP_METHODS[0]);
   const [url, setUrl] = useState(initUrl || '');
+  const [body, setBody] = useState('');
 
   const handleChangeMethod = (event: SelectChangeEvent) => {
     setSelectedMethod(event.target.value);
@@ -17,6 +18,10 @@ export function RestClient({ initMethod, initUrl }: { initMethod?: string; initU
 
   const handleChangeUrl = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(event.target.value);
+  };
+
+  const handleChangeBody = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setBody(event.target.value);
   };
 
   useEffect(() => {
@@ -28,16 +33,27 @@ export function RestClient({ initMethod, initUrl }: { initMethod?: string; initU
   }, [router, selectedMethod, url]);
 
   return (
-    <Box sx={{ fontFamily: 'monospace', whiteSpace: 'pre', display: 'flex', gap: 2 }}>
-      <Select value={selectedMethod} onChange={handleChangeMethod}>
-        {HTTP_METHODS.map((m) => (
-          <MenuItem key={m} value={m}>
-            {m}
-          </MenuItem>
-        ))}
-      </Select>
+    <Box sx={{ fontFamily: 'monospace', whiteSpace: 'pre', display: 'flex', gap: 2, flexDirection: 'column' }}>
+      <Box sx={{ display: 'flex', gap: 2 }}>
+        <Select value={selectedMethod} onChange={handleChangeMethod}>
+          {HTTP_METHODS.map((m) => (
+            <MenuItem key={m} value={m}>
+              {m}
+            </MenuItem>
+          ))}
+        </Select>
 
-      <Input sx={{ width: 800 }} value={url} onChange={handleChangeUrl} autoFocus />
+        <Input sx={{ width: 800 }} value={url} onChange={handleChangeUrl} autoFocus />
+      </Box>
+
+      <TextField
+        multiline
+        rows={4}
+        value={body}
+        onChange={handleChangeBody}
+        placeholder="Request body (Text/JSON)"
+        sx={{ fontFamily: 'monospace' }}
+      />
     </Box>
   );
 }
