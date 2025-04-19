@@ -10,6 +10,8 @@ import { RequestBody } from '../components/RequestBody';
 import { RequestHeaders } from '../components/RequestHeaders';
 import { RequestMethod } from '../components/RequestMethod';
 import { RequestUrl } from '../components/RequestUrl';
+import { ResponseSection } from '../components/ResponseSection';
+import { SendButton } from '../components/SendButton';
 
 export function RestClient({
   initValues,
@@ -23,6 +25,8 @@ export function RestClient({
   const [headers, setHeaders] = useState<Array<{ name: string; value: string }>>(
     initValues.headers || [{ name: '', value: '' }]
   );
+  const [status, setStatus] = useState(0);
+  const [responseBody, setResponseBody] = useState('');
 
   useEffect(() => {
     const updatedUrl = generateRestClientPageUrl({
@@ -40,9 +44,18 @@ export function RestClient({
       <Box sx={{ display: 'flex', gap: 2 }}>
         <RequestMethod method={selectedMethod} onMethodChange={setSelectedMethod} />
         <RequestUrl url={url} onUrlChange={setUrl} />
+        <SendButton
+          url={url}
+          method={selectedMethod}
+          body={body}
+          headers={headers}
+          setStatus={setStatus}
+          setResponseBody={setResponseBody}
+        />
       </Box>
       <RequestHeaders headers={headers} onHeadersChange={setHeaders} />
       <RequestBody body={body} onBodyChange={setBody} />
+      <ResponseSection status={status} body={responseBody} />
     </Box>
   );
 }
