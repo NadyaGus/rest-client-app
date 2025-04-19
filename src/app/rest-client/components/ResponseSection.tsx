@@ -8,7 +8,7 @@ export const ResponseSection = ({ status, body }: { status: number; body: string
 
   return (
     <Box>
-      <Typography>Response Status: {status}</Typography>
+      <Typography>Response Status: {status ? status : 'N/A'}</Typography>
       <TextField
         component={'pre'}
         multiline
