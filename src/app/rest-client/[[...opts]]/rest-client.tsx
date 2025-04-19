@@ -2,10 +2,11 @@
 
 import { HTTP_METHODS, ROUTES } from '@/constants';
 import { encodeStringToBase64, serializeHeadersQueryString } from '@/utils/helpers';
-import { Box, Input, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { Box, Input, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { RequestBody } from '../components/RequestBody';
 import { RequestHeaders } from '../components/RequestHeaders';
 
 export function RestClient({
@@ -21,48 +22,12 @@ export function RestClient({
     initValues.headers || [{ name: '', value: '' }]
   );
 
-  const handleHeaderChange = (index: number, field: 'name' | 'value', value: string) => {
-    const newRows = [...headers];
-    newRows[index][field] = value;
-    setHeaders(newRows);
-
-    const lastRow = newRows[newRows.length - 1];
-    const needNewRow = lastRow.name && lastRow.value;
-    if (needNewRow) {
-      setHeaders([...newRows, { name: '', value: '' }]);
-    }
-  };
-
-  const handleDeleteHeader = (index: number) => {
-    const newRows = headers.filter((_, i) => i !== index);
-    if (newRows.length === 0) {
-      newRows.push({ name: '', value: '' });
-    }
-    setHeaders(newRows);
-  };
-
   const handleChangeMethod = (event: SelectChangeEvent) => {
     setSelectedMethod(event.target.value);
   };
 
   const handleChangeUrl = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(event.target.value);
-  };
-
-  const handleChangeBody = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setBody(event.target.value);
-  };
-
-  const handleBodyBlur = () => {
-    if (!body.trim()) {
-      return;
-    }
-    try {
-      const parsed = JSON.parse(body);
-      setBody(JSON.stringify(parsed, null, 2));
-    } catch {
-      // It's not valid JSON or Text, leave as is
-    }
   };
 
   useEffect(() => {
@@ -94,17 +59,9 @@ export function RestClient({
         <Input sx={{ width: 800 }} value={url} onChange={handleChangeUrl} autoFocus placeholder="Enter URL" />
       </Box>
 
-      <RequestHeaders headers={headers} onHeaderChange={handleHeaderChange} onDeleteHeader={handleDeleteHeader} />
+      <RequestHeaders headers={headers} onHeadersChange={setHeaders} />
 
-      <TextField
-        multiline
-        rows={4}
-        value={body}
-        onChange={handleChangeBody}
-        onBlur={handleBodyBlur}
-        placeholder="Request body (Text/JSON)"
-        sx={{ fontFamily: 'monospace' }}
-      />
+      <RequestBody body={body} onBodyChange={setBody} />
     </Box>
   );
 }

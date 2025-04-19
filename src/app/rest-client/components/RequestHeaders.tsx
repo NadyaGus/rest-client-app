@@ -8,11 +8,31 @@ interface Header {
 
 interface RequestHeadersProps {
   headers: Header[];
-  onHeaderChange: (index: number, field: 'name' | 'value', value: string) => void;
-  onDeleteHeader: (index: number) => void;
+  onHeadersChange: (headers: Header[]) => void;
 }
 
-export function RequestHeaders({ headers, onHeaderChange, onDeleteHeader }: RequestHeadersProps) {
+export function RequestHeaders({ headers, onHeadersChange }: RequestHeadersProps) {
+  const handleHeaderChange = (index: number, field: 'name' | 'value', value: string) => {
+    const newRows = [...headers];
+    newRows[index][field] = value;
+
+    const lastRow = newRows[newRows.length - 1];
+    const needNewRow = lastRow.name && lastRow.value;
+    if (needNewRow) {
+      newRows.push({ name: '', value: '' });
+    }
+
+    onHeadersChange(newRows);
+  };
+
+  const handleDeleteHeader = (index: number) => {
+    const newRows = headers.filter((_, i) => i !== index);
+    if (newRows.length === 0) {
+      newRows.push({ name: '', value: '' });
+    }
+    onHeadersChange(newRows);
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
       {headers.map((row, index) => (
@@ -20,16 +40,19 @@ export function RequestHeaders({ headers, onHeaderChange, onDeleteHeader }: Requ
           <Input
             placeholder="Header name"
             value={row.name}
-            onChange={(e) => onHeaderChange(index, 'name', e.target.value)}
+            onChange={(e) => handleHeaderChange(index, 'name', e.target.value)}
             sx={{ width: 200 }}
           />
           <Input
             placeholder="Header value"
             value={row.value}
-            onChange={(e) => onHeaderChange(index, 'value', e.target.value)}
+            onChange={(e) => handleHeaderChange(index, 'value', e.target.value)}
             sx={{ flexGrow: 1 }}
           />
-          <IconButton onClick={() => onDeleteHeader(index)} disabled={headers.length === 1 && !row.name && !row.value}>
+          <IconButton
+            onClick={() => handleDeleteHeader(index)}
+            disabled={headers.length === 1 && !row.name && !row.value}
+          >
             <DeleteIcon />
           </IconButton>
         </Box>
