@@ -1,3 +1,7 @@
+import VariablesPage from '@/app/variables/page';
+import { cleanup, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
+
 vi.mock('next/dynamic', () => ({
   __esModule: true,
   default: () => {
@@ -6,10 +10,6 @@ vi.mock('next/dynamic', () => ({
     return DynamicComponent;
   },
 }));
-
-import VariablesPage from '@/app/variables/page';
-import { cleanup, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 describe('VariablesPage', () => {
   beforeEach(() => {
