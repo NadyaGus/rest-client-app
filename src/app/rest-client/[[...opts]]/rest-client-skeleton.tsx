@@ -1,6 +1,6 @@
 import { Box, Skeleton } from '@mui/material';
 
-export default function Loading() {
+export function RestClientSkeleton() {
   return (
     <Box sx={{ p: 3, display: 'flex', alignItems: 'center', flexDirection: 'column', gap: 2 }}>
       <Skeleton variant="rectangular" width={200} height={40} />
