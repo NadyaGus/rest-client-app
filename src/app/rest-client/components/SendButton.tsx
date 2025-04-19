@@ -4,33 +4,40 @@ export const SendButton = ({
   url,
   method,
   body,
-  // headers,
+  headers,
   setStatus,
   setResponseBody,
 }: {
   url: string;
   method: string;
   body?: string;
-  headers: Array<{ name: string; value: string }>;
+  headers?: Array<{ name: string; value: string }>;
   setStatus: (status: number) => void;
   setResponseBody: (body: string) => void;
 }) => {
   const handleClick = async () => {
     const request: RequestInit = {
       method,
-      // TODO add types for headers
-      // headers: headers.reduce(
-      //   (acc, header) => {
-      //     acc[header.name] = header.value;
-      //     return acc;
-      //   },
-      //   {} as Record<string, string>
-      // ),
     };
 
     if (body) {
       request.body = body;
     }
+
+    if (headers) {
+      request.headers = headers.reduce(
+        (acc, header) => {
+          if (!header.name || !header.value) {
+            return acc;
+          }
+          acc[header.name] = header.value;
+          return acc;
+        },
+        {} as Record<string, string>
+      );
+    }
+
+    console.log(request);
 
     const data = await fetch(url, request);
     if (!data.ok) {
