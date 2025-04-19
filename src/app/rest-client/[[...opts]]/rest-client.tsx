@@ -6,11 +6,19 @@ import { Box, Input, MenuItem, Select, SelectChangeEvent, TextField } from '@mui
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export function RestClient({ initMethod, initUrl }: { initMethod?: string; initUrl?: string }) {
+export function RestClient({
+  initMethod,
+  initUrl,
+  initBody,
+}: {
+  initMethod?: string;
+  initUrl?: string;
+  initBody?: string;
+}) {
   const router = useRouter();
   const [selectedMethod, setSelectedMethod] = useState(initMethod || HTTP_METHODS[0]);
   const [url, setUrl] = useState(initUrl || '');
-  const [body, setBody] = useState('');
+  const [body, setBody] = useState(initBody || '');
 
   const handleChangeMethod = (event: SelectChangeEvent) => {
     setSelectedMethod(event.target.value);
@@ -29,8 +37,11 @@ export function RestClient({ initMethod, initUrl }: { initMethod?: string; initU
     if (url) {
       updatedUrl += `/${encodeStringToBase64(url)}`;
     }
-    router.push(updatedUrl);
-  }, [router, selectedMethod, url]);
+    if (body.trim()) {
+      updatedUrl += `/${encodeStringToBase64(body)}`;
+    }
+    window.history.replaceState({}, '', updatedUrl);
+  }, [router, selectedMethod, url, body]);
 
   return (
     <Box sx={{ fontFamily: 'monospace', whiteSpace: 'pre', display: 'flex', gap: 2, flexDirection: 'column' }}>
