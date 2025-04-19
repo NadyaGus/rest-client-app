@@ -41,9 +41,7 @@ export function RestClient({
         <RequestMethod method={selectedMethod} onMethodChange={setSelectedMethod} />
         <RequestUrl url={url} onUrlChange={setUrl} />
       </Box>
-
       <RequestHeaders headers={headers} onHeadersChange={setHeaders} />
-
       <RequestBody body={body} onBodyChange={setBody} />
     </Box>
   );
