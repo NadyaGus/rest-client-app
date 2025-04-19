@@ -2,10 +2,11 @@
 
 import { HTTP_METHODS, ROUTES } from '@/constants';
 import { encodeStringToBase64, serializeHeadersQueryString } from '@/utils/helpers';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, IconButton, Input, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { Box, Input, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+
+import { RequestHeaders } from '../components/RequestHeaders';
 
 export function RestClient({
   initValues,
@@ -93,30 +94,7 @@ export function RestClient({
         <Input sx={{ width: 800 }} value={url} onChange={handleChangeUrl} autoFocus placeholder="Enter URL" />
       </Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-        {headers.map((row, index) => (
-          <Box key={index} sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-            <Input
-              placeholder="Header name"
-              value={row.name}
-              onChange={(e) => handleHeaderChange(index, 'name', e.target.value)}
-              sx={{ width: 200 }}
-            />
-            <Input
-              placeholder="Header value"
-              value={row.value}
-              onChange={(e) => handleHeaderChange(index, 'value', e.target.value)}
-              sx={{ flexGrow: 1 }}
-            />
-            <IconButton
-              onClick={() => handleDeleteHeader(index)}
-              disabled={headers.length === 1 && !row.name && !row.value}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Box>
-        ))}
-      </Box>
+      <RequestHeaders headers={headers} onHeaderChange={handleHeaderChange} onDeleteHeader={handleDeleteHeader} />
 
       <TextField
         multiline
