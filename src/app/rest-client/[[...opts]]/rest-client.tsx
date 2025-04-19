@@ -32,6 +32,18 @@ export function RestClient({
     setBody(event.target.value);
   };
 
+  const handleBodyBlur = () => {
+    if (!body.trim()) {
+      return;
+    }
+    try {
+      const parsed = JSON.parse(body);
+      setBody(JSON.stringify(parsed, null, 2));
+    } catch {
+      // It's not valid JSON or Text, leave as is
+    }
+  };
+
   useEffect(() => {
     let updatedUrl = `${ROUTES.restClient.href}/${selectedMethod}`;
     if (url) {
@@ -62,6 +74,7 @@ export function RestClient({
         rows={4}
         value={body}
         onChange={handleChangeBody}
+        onBlur={handleBodyBlur}
         placeholder="Request body (Text/JSON)"
         sx={{ fontFamily: 'monospace' }}
       />
