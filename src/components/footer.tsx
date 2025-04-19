@@ -24,7 +24,7 @@ export const Footer = () => {
       <Typography variant="body2" color="text.secondary" align="center">
         <Link href="https://github.com/orgs/The-Redux-Rangers/people" target="_blank">
           {'Copyright © '}
-          The Redux Rangers {new Date().getFullYear()}
+          The Redux Rangers 2025
           {'.'}
         </Link>
       </Typography>
