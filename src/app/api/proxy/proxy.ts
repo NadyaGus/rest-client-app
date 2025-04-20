@@ -26,7 +26,7 @@ export async function forwardRequest(
     return {
       status: response.status,
       body: responseText,
-      error: !response.ok ? responseText : undefined,
+      error: undefined,
     };
   } catch (fetchError: unknown) {
     const meaningfulErrorMessage = handleFetchError(fetchError, url);
