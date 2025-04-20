@@ -39,7 +39,7 @@ describe('HistoryContent', () => {
     render(<HistoryContent />);
 
     expect(screen.getByText('History')).toBeInTheDocument();
-    expect(screen.getByText(/no request history yet/i)).toBeInTheDocument();
+    expect(screen.getByText(/empty/i)).toBeInTheDocument();
   });
 
   test('renders history list when history is present', () => {

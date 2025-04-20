@@ -1,23 +1,21 @@
-'use client';
+import { Locale } from '@/i18n/config';
+import { setUserLocale } from '@/i18n/locale';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { useState } from 'react';
+import { useLocale } from 'next-intl';
 
 export function ToggleLanguage() {
-  const [language, setLanguage] = useState('en');
+  const locale = useLocale();
 
-  const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
-    if (newAlignment !== null) {
-      setLanguage(newAlignment);
-      // TODO: add changing language
-    }
+  const handleChange = (_event: React.MouseEvent<HTMLElement>, value: Locale) => {
+    setUserLocale(value);
   };
 
   return (
     <ToggleButtonGroup
       size="small"
       color="primary"
-      value={language}
+      value={locale}
       exclusive
       onChange={handleChange}
       aria-label="Language"

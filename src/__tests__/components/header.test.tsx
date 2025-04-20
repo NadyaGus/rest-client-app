@@ -1,5 +1,7 @@
 import { Header } from '@/components/header';
+import messages from '@/i18n/messages/en.json';
 import { render, screen } from '@testing-library/react';
+import { NextIntlClientProvider } from 'next-intl';
 import { describe, test, expect, vi } from 'vitest';
 
 vi.mock('next/navigation', () => ({
@@ -19,8 +21,12 @@ vi.mock('@/hooks/useAuth', () => ({
 
 describe('Header Component', () => {
   test('renders the header with title', () => {
-    render(<Header />);
-    const header = screen.getByRole('heading', { name: 'RESTful Client' });
+    render(
+      <NextIntlClientProvider locale="en" messages={messages}>
+        <Header />
+      </NextIntlClientProvider>
+    );
+    const header = screen.getByRole('heading', { name: 'RESTful Client App' });
     expect(header).toBeInTheDocument();
   });
 });

@@ -32,7 +32,7 @@ describe('RestClientContent', () => {
     render(<RestClientContent opts={['GET', encodedUrl]} />);
 
     const select = screen.getAllByRole('combobox')[0];
-    const urlInput = screen.getByPlaceholderText('Enter URL');
+    const urlInput = screen.getByPlaceholderText('enterUrl');
 
     expect(select).toHaveTextContent('GET');
     expect(urlInput).toHaveValue(url);
@@ -55,7 +55,7 @@ describe('RestClientContent', () => {
   test('updates URL input value on change', () => {
     render(<RestClientContent opts={['GET', 'https://example.com']} />);
 
-    const urlInput = screen.getByPlaceholderText('Enter URL');
+    const urlInput = screen.getByPlaceholderText('enterUrl');
     fireEvent.change(urlInput, { target: { value: 'https://example.com' } });
 
     expect(urlInput).toHaveValue('https://example.com');

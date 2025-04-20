@@ -4,6 +4,7 @@ import { ROUTES } from '@/constants';
 import { createClient } from '@/utils/supabase/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Box, Button, Container, TextField, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -17,6 +18,8 @@ const signInSchema = z.object({
 type SignInFormData = z.infer<typeof signInSchema>;
 
 export default function LoginPage() {
+  const t = useTranslations('Auth');
+  const t_routes = useTranslations('Routes');
   const supabase = createClient();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -63,12 +66,12 @@ export default function LoginPage() {
         }}
       >
         <Typography variant="h4" component="h1" align="center">
-          {ROUTES.signIn.title}
+          {t_routes(ROUTES.signIn.title)}
         </Typography>
 
         {error && (
           <Alert severity="error" sx={{ mt: 2 }}>
-            {error}
+            {t(error)}
           </Alert>
         )}
 
@@ -80,23 +83,23 @@ export default function LoginPage() {
           autoFocus
           disabled={loading}
           error={!!errors.email}
-          helperText={errors.email?.message}
+          helperText={errors.email?.message ? t(errors.email.message) : null}
           {...register('email')}
         />
 
         <TextField
           id="password"
-          label="Password"
+          label={t('password')}
           type="password"
           autoComplete="current-password"
           disabled={loading}
           error={!!errors.password}
-          helperText={errors.password?.message}
+          helperText={errors.password?.message ? t(errors.password?.message) : null}
           {...register('password')}
         />
 
         <Button type="submit" variant="contained" size="large" disabled={loading}>
-          {loading ? 'Signing in...' : 'Sign In'}
+          {loading ? t('signingIn') : t_routes(ROUTES.signIn.title)}
         </Button>
       </Box>
     </Container>

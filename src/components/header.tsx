@@ -1,5 +1,5 @@
 'use client';
-import { ROUTES } from '@/constants';
+import { APP_NAME, ROUTES } from '@/constants';
 import { useAuth } from '@/hooks/use-auth';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Skeleton from '@mui/material/Skeleton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -18,6 +19,7 @@ import { HeaderDrawer } from './header-drawer';
 import { ToggleLanguage } from './toggle-language';
 
 export const Header = () => {
+  const t = useTranslations('Routes');
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { user, loading, signOut } = useAuth();
@@ -62,7 +64,7 @@ export const Header = () => {
       >
         <Toolbar>
           <Typography variant="h6" component="h1" sx={{ flexGrow: 1 }}>
-            <Link href={ROUTES.main.href}>RESTful Client</Link>
+            <Link href={ROUTES.main.href}>{APP_NAME}</Link>
           </Typography>
 
           <Box sx={{ mr: 3 }}>
@@ -89,7 +91,7 @@ export const Header = () => {
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
               {navItems.map((item) => (
                 <Button key={item} sx={{ color: '#fff' }} onClick={() => handleClick(item)}>
-                  <Link href={getRouteURL(item)}>{item}</Link>
+                  <Link href={getRouteURL(item)}>{t(item)}</Link>
                 </Button>
               ))}
             </Box>

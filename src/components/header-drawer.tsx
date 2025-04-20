@@ -4,6 +4,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 type HeaderDrawerProps = {
@@ -23,6 +24,8 @@ export const HeaderDrawer = ({
   getRouteURL,
   onItemClick,
 }: HeaderDrawerProps) => {
+  const t = useTranslations('Routes');
+
   return (
     <Drawer
       anchor="right"
@@ -49,7 +52,7 @@ export const HeaderDrawer = ({
             <ListItem key={item} disablePadding>
               <ListItemButton sx={{ textAlign: 'center' }} onClick={() => onItemClick(item)}>
                 <Link href={getRouteURL(item)}>
-                  <ListItemText primary={item} />
+                  <ListItemText primary={t(item)} />
                 </Link>
               </ListItemButton>
             </ListItem>

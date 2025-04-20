@@ -4,6 +4,7 @@ import { ROUTES } from '@/constants';
 import { createClient } from '@/utils/supabase/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Box, Button, Container, TextField, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -28,6 +29,8 @@ const signUpSchema = z
 type SignUpFormData = z.infer<typeof signUpSchema>;
 
 export default function SignUpPage() {
+  const t = useTranslations('Auth');
+  const t_routes = useTranslations('Routes');
   const supabase = createClient();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -74,7 +77,7 @@ export default function SignUpPage() {
         }}
       >
         <Typography variant="h4" component="h1" align="center">
-          {ROUTES.signUp.title}
+          {t_routes(ROUTES.signUp.title)}
         </Typography>
 
         {error && (
@@ -91,18 +94,18 @@ export default function SignUpPage() {
           autoFocus
           disabled={loading}
           error={!!errors.email}
-          helperText={errors.email?.message}
+          helperText={errors.email?.message ? t(errors.email.message) : null}
           {...register('email')}
         />
 
         <TextField
           id="password"
-          label="Password"
+          label={t('password')}
           type="password"
           autoComplete="new-password"
           disabled={loading}
           error={!!errors.password}
-          helperText={errors.password?.message}
+          helperText={errors.password?.message ? t(errors.password?.message) : null}
           {...register('password')}
           slotProps={{
             htmlInput: {
@@ -113,12 +116,12 @@ export default function SignUpPage() {
 
         <TextField
           id="confirmPassword"
-          label="Confirm Password"
+          label={t('confirmPassword')}
           type="password"
           autoComplete="new-password"
           disabled={loading}
           error={!!errors.confirmPassword}
-          helperText={errors.confirmPassword?.message}
+          helperText={errors.confirmPassword?.message ? t(errors.confirmPassword?.message) : null}
           {...register('confirmPassword')}
           slotProps={{
             htmlInput: {
@@ -128,7 +131,7 @@ export default function SignUpPage() {
         />
 
         <Button type="submit" variant="contained" size="large" disabled={loading}>
-          {loading ? 'Signing up...' : 'Sign Up'}
+          {loading ? 'Signing up...' : t_routes(ROUTES.signUp.title)}
         </Button>
       </Box>
     </Container>

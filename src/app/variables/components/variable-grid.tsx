@@ -1,6 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Paper } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridColDef } from '@mui/x-data-grid';
+import { useTranslations } from 'next-intl';
 
 interface Variable {
   name: string;
@@ -16,9 +17,10 @@ interface VariableGridProps {
 const paginationModel = { page: 0, pageSize: 5 };
 
 export function VariableGrid({ variables, onDelete, isLoading }: VariableGridProps) {
+  const t = useTranslations('Variables');
   const columns: GridColDef[] = [
-    { field: 'name', headerName: 'Name', flex: 1 },
-    { field: 'value', headerName: 'Value', flex: 1 },
+    { field: 'name', headerName: t('name'), flex: 1 },
+    { field: 'value', headerName: t('value'), flex: 1 },
     {
       field: 'delete',
       type: 'actions',
@@ -28,7 +30,7 @@ export function VariableGrid({ variables, onDelete, isLoading }: VariableGridPro
           <GridActionsCellItem
             key={id}
             icon={<DeleteIcon />}
-            label="Delete"
+            label={t('deleteVariable')}
             onClick={() => onDelete(id as string)}
             color="inherit"
           />,

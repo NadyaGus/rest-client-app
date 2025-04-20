@@ -3,6 +3,7 @@
 import { useVariables } from '@/hooks/use-variables';
 import { sendRequest } from '@/utils/request-helper';
 import { Button } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 import { useHistory } from '../hooks/use-history';
 
@@ -29,6 +30,7 @@ export const SendButton = ({
   setBody: (body: string) => void;
   setHeaders: (headers: Array<{ name: string; value: string }>) => void;
 }) => {
+  const t = useTranslations('Client');
   const { replaceVariables } = useVariables();
   const { saveRequest } = useHistory();
 
@@ -73,13 +75,13 @@ export const SendButton = ({
       setResponseError(responseError);
     } catch (error) {
       setStatus(0);
-      setResponseError(error instanceof Error ? error.message : 'Could not send request');
+      setResponseError(error instanceof Error ? error.message : t('Could not send request'));
     }
   };
 
   return (
     <Button type="submit" variant="contained" color="primary" onClick={handleClick}>
-      Send
+      {t('send')}
     </Button>
   );
 };

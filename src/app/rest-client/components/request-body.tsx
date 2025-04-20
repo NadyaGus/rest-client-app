@@ -1,4 +1,5 @@
 import { TextField } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 interface RequestBodyProps {
   body: string;
@@ -6,6 +7,7 @@ interface RequestBodyProps {
 }
 
 export function RequestBody({ body, onBodyChange }: RequestBodyProps) {
+  const t = useTranslations('Client');
   const handleChangeBody = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     onBodyChange(event.target.value);
   };
@@ -29,7 +31,7 @@ export function RequestBody({ body, onBodyChange }: RequestBodyProps) {
       value={body}
       onChange={handleChangeBody}
       onBlur={handleBodyBlur}
-      placeholder="Request body (Text/JSON)"
+      placeholder={t('requestBody')}
       sx={{ fontFamily: 'monospace' }}
     />
   );

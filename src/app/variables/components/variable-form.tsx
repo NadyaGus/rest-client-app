@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Add } from '@mui/icons-material';
 import { Box, Button, TextField } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -20,6 +21,7 @@ interface VariableFormProps {
 }
 
 export function VariableForm({ onSubmit, existingNames, isLoading }: VariableFormProps) {
+  const t = useTranslations('Variables');
   const {
     register,
     handleSubmit,
@@ -31,7 +33,7 @@ export function VariableForm({ onSubmit, existingNames, isLoading }: VariableFor
 
   const onFormSubmit = async (data: VariableFormData) => {
     if (existingNames?.has(data.name)) {
-      if (!confirm('A variable with this name already exists. Do you want to update it?')) {
+      if (!confirm(t('variableExists'))) {
         return;
       }
     }
@@ -51,20 +53,20 @@ export function VariableForm({ onSubmit, existingNames, isLoading }: VariableFor
       }}
     >
       <TextField
-        label="Name"
+        label={t('name')}
         variant="outlined"
         disabled={isLoading}
         error={!!errors.name}
-        helperText={errors.name?.message}
+        helperText={errors.name?.message ? t(errors.name.message) : ''}
         fullWidth
         {...register('name')}
       />
       <TextField
-        label="Value"
+        label={t('value')}
         variant="outlined"
         disabled={isLoading}
         error={!!errors.value}
-        helperText={errors.value?.message}
+        helperText={errors.value?.message ? t(errors.value.message) : ''}
         fullWidth
         {...register('value')}
       />
@@ -80,7 +82,7 @@ export function VariableForm({ onSubmit, existingNames, isLoading }: VariableFor
           whiteSpace: 'nowrap',
         }}
       >
-        Add variable
+        {t('addVariable')}
       </Button>
     </Box>
   );

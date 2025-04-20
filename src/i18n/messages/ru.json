@@ -1,0 +1,75 @@
+{
+  "Routes": {
+    "Main": "Главная",
+    "Sign in": "Войти",
+    "Sign up": "Зарегистрироваться",
+    "Sign out": "Выйти",
+    "Client": "REST Клиент",
+    "Variables": "Переменные",
+    "History": "История"
+  },
+  "Auth": {
+    "signingIn": "Вход в систему...",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "Invalid login credentials": "Неверные учетные данные для входа",
+    "Invalid email address": "Недопустимый email адрес",
+    "Password is required": "Пароль обязателен",
+    "Password must be at least 8 characters": "Пароль должен содержать не менее 8 символов",
+    "Password must contain at least one letter": "Пароль должен содержать хотя бы одну букву",
+    "Password must contain at least one digit": "Пароль должен содержать хотя бы одну цифру",
+    "Password must contain at least one special character": "Пароль должен содержать хотя бы один специальный символ",
+    "Passwords don't match": "Пароли не совпадают"
+  },
+  "HomePage": {
+    "welcome": "Добро пожаловать в {appName}.",
+    "welcomeBack": "С возвращением, {name}!",
+    "description": "Легкий клиент для RESTful API",
+    "user": "Пользователь"
+  },
+  "MainPageInfo": {
+    "aboutTitle": "О проекте",
+    "aboutDescription": "{appName} — это простой и удобный инструмент для взаимодействия с RESTful API. Он позволяет вам исследовать, создавать, обновлять и удалять данные из API.",
+    "developedByTitle": "Команда разработчиков",
+    "Nadya": "Надя Гусакова",
+    "Murad": "Мурад Давыдов",
+    "Oleg": "Олег Сульянов",
+    "aboutCourseTitle": "О курсе",
+    "aboutCourseDescription1": "Этот проект был создан в рамках ",
+    "aboutCourseDescription2": " курса React. Это бесплатный курс для веб-разработчиков. В RS School может учиться каждый, независимо от возраста, профессиональной занятости или места жительства."
+  },
+  "Client": {
+    "enterUrl": "Введите URL",
+    "headerName": "Название заголовка",
+    "headerValue": "Значение заголовка",
+    "send": "Отправить",
+    "Could not send request": "Не удалось отправить запрос",
+    "requestBody": "Тело запроса (Текст/JSON)",
+    "generateCode": "Сгенерировать код",
+    "Failed to generate code": "Не удалось сгенерировать код"
+  },
+  "Variables": {
+    "name": "Название",
+    "value": "Значение",
+    "addVariable": "Добавить переменную",
+    "deleteVariable": "Удалить переменную",
+    "Name is required": "Имя переменной обязательно",
+    "Value is required": "Значение переменной обязательно",
+    "Name can only contain latin letters, numbers, underscores and hyphens": "Имя может содержать только латинские буквы, цифры, символы подчеркивания и дефисы",
+    "variableExists": "Переменная с таким именем уже существует. Вы хотите обновить ее?",
+    "saveVariablesFailed": "Не удалось сохранить переменные",
+    "deleteVariableFailed": "Не удалось удалить переменную"
+  },
+  "History": {
+    "empty": "История запросов пока пуста",
+    "try": "Для начала попробуйте эти примеры API:",
+    "dogsBreeds": "Узнайте больше о породах собак",
+    "petAdopt": "Найдите питомца, которого можно усыновить",
+    "catImage": "Получите случайное изображение кошки"
+  },
+  "NotFound": {
+    "title": "Страница не найдена",
+    "description": "Страница, которую вы ищете, не существует или была перемещена.",
+    "returnHome": "Вернуться на главную"
+  }
+}

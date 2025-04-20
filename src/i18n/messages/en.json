@@ -1,0 +1,75 @@
+{
+  "Routes": {
+    "Main": "Main",
+    "Sign in": "Sign in",
+    "Sign up": "Sign up",
+    "Sign out": "Sign out",
+    "Client": "REST Client",
+    "Variables": "Variables",
+    "History": "History"
+  },
+  "Auth": {
+    "signingIn": "Signing in...",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "Invalid login credentials": "Invalid login credentials",
+    "Invalid email address": "Invalid email address",
+    "Password is required": "Password is required",
+    "Password must be at least 8 characters": "Password must be at least 8 characters",
+    "Password must contain at least one letter": "Password must contain at least one letter",
+    "Password must contain at least one digit": "Password must contain at least one digit",
+    "Password must contain at least one special character": "Password must contain at least one special character",
+    "Passwords don't match": "Passwords don't match"
+  },
+  "HomePage": {
+    "welcome": "Welcome to {appName}.",
+    "welcomeBack": "Welcome Back, {name}!",
+    "description": "A lightweight client for RESTful APIs",
+    "user": "User"
+  },
+  "MainPageInfo": {
+    "aboutTitle": "About Project",
+    "aboutDescription": "{appName} is a simple and user-friendly tool for interacting with RESTful APIs. It allows you to explore, create, update, and delete data from an API.",
+    "developedByTitle": "Developed by",
+    "Nadya": "Nadya Gusakova",
+    "Murad": "Murad Davydov",
+    "Oleg": "Oleg Sulyanov",
+    "aboutCourseTitle": "About Course",
+    "aboutCourseDescription1": "This project was created as part of the ",
+    "aboutCourseDescription2": " React course. This is a free course for web developers. Everyone can study at RS School, regardless of age, professional employment, or place of residence."
+  },
+  "Client": {
+    "enterUrl": "Enter URL",
+    "headerName": "Header name",
+    "headerValue": "Header value",
+    "send": "Send",
+    "Could not send request": "Could not send request",
+    "requestBody": "Request body (Text/JSON)",
+    "generateCode": "Generate Code",
+    "Failed to generate code": "Failed to generate code"
+  },
+  "Variables": {
+    "name": "Name",
+    "value": "Value",
+    "addVariable": "Add Variable",
+    "deleteVariable": "Delete Variable",
+    "Name is required": "Variable name is required",
+    "Value is required": "Variable value is required",
+    "Name can only contain latin letters, numbers, underscores and hyphens": "Name can only contain latin letters, numbers, underscores and hyphens",
+    "variableExists": "A variable with this name already exists. Do you want to update it?",
+    "saveVariablesFailed": "Failed to save variables",
+    "deleteVariableFailed": "Failed to delete variable"
+  },
+  "History": {
+    "empty": "No Request History Yet",
+    "try": "Try out these sample API endpoints to get started:",
+    "dogsBreeds": "Find out more about dogs breeds",
+    "petAdopt": "Find a pet to adopt",
+    "catImage": "Get a random cat image"
+  },
+  "NotFound": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "returnHome": "Return Home"
+  }
+}
