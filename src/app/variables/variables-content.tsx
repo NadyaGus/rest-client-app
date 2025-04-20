@@ -1,6 +1,6 @@
 'use client';
 
-import { useVariables } from '@/hooks/useVariables';
+import { useVariables } from '@/hooks/use-variables';
 import { Alert, Box, Container, Typography } from '@mui/material';
 
 import { VariableForm } from './components/variable-form';

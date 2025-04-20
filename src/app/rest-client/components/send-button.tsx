@@ -1,6 +1,6 @@
 'use client';
 
-import { useVariables } from '@/hooks/useVariables';
+import { useVariables } from '@/hooks/use-variables';
 import { sendRequest } from '@/utils/request-helper';
 import { Button } from '@mui/material';
 
