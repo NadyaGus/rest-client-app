@@ -8,9 +8,12 @@ export const ResponseSection = ({ status, body }: { status: number; body: string
 
   return (
     <Box>
-      <Typography>
-        {status === 0 ? 'Response' : <Chip color={isHttpCodeSuccess(status) ? 'success' : 'error'} label={status} />}
-      </Typography>
+      {status === 0 && <Typography>Response</Typography>}
+      {status !== 0 && (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Chip color={isHttpCodeSuccess(status) ? 'success' : 'error'} label={status} />
+        </Box>
+      )}
 
       <TextField
         multiline
