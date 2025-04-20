@@ -79,7 +79,7 @@ export function RestClient({
           {responseError}
         </Alert>
       )}
-      <GenerateCodeSection method={selectedMethod} endpoint={url} body={body} />
+      <GenerateCodeSection method={selectedMethod} endpoint={url} body={body} headers={headers} />
     </Box>
   );
 }

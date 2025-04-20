@@ -12,7 +12,17 @@ const languages = [
   { name: 'Go', variant: ['Native'] },
 ];
 
-export const GenerateCodeSection = ({ endpoint, method, body }: { endpoint: string; method: string; body: string }) => {
+export const GenerateCodeSection = ({
+  endpoint,
+  method,
+  body,
+  headers,
+}: {
+  endpoint: string;
+  method: string;
+  body: string;
+  headers: { name: string; value: string }[];
+}) => {
   const [language, setLanguage] = useState(languages[0].name);
   const [variant, setVariant] = useState('---');
   const [variants, setVariants] = useState(languages[0].variant);
@@ -21,15 +31,24 @@ export const GenerateCodeSection = ({ endpoint, method, body }: { endpoint: stri
 
   useEffect(() => {
     setVariant('---');
+    setResult('');
     setVariants(languages.find((l) => l.name === language)?.variant || []);
   }, [language]);
 
   const handleClick = () => {
+    const headersObj = headers.reduce((acc, header) => {
+      if (!header.name || !header.value) {
+        return acc;
+      }
+      return { ...acc, [header.name]: header.value };
+    }, {});
+
     const request = {
       language,
       variant,
       endpoint,
       method,
+      headers: headersObj,
       body,
     };
 

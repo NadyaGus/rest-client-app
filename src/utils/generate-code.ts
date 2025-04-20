@@ -45,7 +45,7 @@ export const generateLanguageCode = ({
 
   let result = '';
 
-  codegen.convert(language, variant, request, {}, (error: Error | null, snippet: string) => {
+  codegen.convert(language, variant, request, headers, (error: Error | null, snippet: string) => {
     if (error) {
       return;
     }
