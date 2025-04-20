@@ -8,17 +8,34 @@ export const ResponseSection = ({ status, body }: { status: number; body: string
 
   return (
     <Box>
-      <Typography>Response Status: {status ? status : 'N/A'}</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography>Response</Typography>
+        <Typography sx={{ visibility: status === 0 ? 'hidden' : 'visible' }}>Status: {status}</Typography>
+      </Box>
       <TextField
-        component={'pre'}
         multiline
         minRows={4}
         fullWidth
         variant="outlined"
         size="small"
-        sx={{ mt: 2 }}
+        sx={{
+          mt: 2,
+          fontFamily: 'monospace',
+          '& .MuiInputBase-input.Mui-disabled': {
+            WebkitTextFillColor: '#fff',
+            color: '#fff',
+          },
+          '& .MuiOutlinedInput-root': {
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          },
+        }}
         disabled
         value={body}
+        slotProps={{
+          input: {
+            style: { fontFamily: 'monospace' },
+          },
+        }}
       />
 
       <Button
