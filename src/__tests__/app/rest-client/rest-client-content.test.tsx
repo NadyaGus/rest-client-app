@@ -31,7 +31,7 @@ describe('RestClientContent', () => {
     const encodedUrl = 'aHR0cHM6Ly9leGFtcGxlLmNvbQ';
     render(<RestClientContent opts={['GET', encodedUrl]} />);
 
-    const select = screen.getByRole('combobox');
+    const select = screen.getAllByRole('combobox')[0];
     const urlInput = screen.getByPlaceholderText('Enter URL');
 
     expect(select).toHaveTextContent('GET');
@@ -42,7 +42,7 @@ describe('RestClientContent', () => {
     const encodedUrl = 'aHR0cHM6Ly9leGFtcGxlLmNvbQ';
     render(<RestClientContent opts={['GET', encodedUrl]} />);
 
-    const select = screen.getByRole('combobox');
+    const select = screen.getAllByRole('combobox')[0];
     fireEvent.mouseDown(select);
 
     const postOption = screen.getByText('POST');
@@ -70,7 +70,7 @@ describe('RestClientContent', () => {
     const encodedUrl = 'aHR0cHM6Ly9leGFtcGxlLmNvbQ';
     render(<RestClientContent opts={['GET', encodedUrl]} />);
 
-    const select = screen.getByRole('combobox');
+    const select = screen.getAllByRole('combobox')[0];
     fireEvent.mouseDown(select);
 
     const putOption = screen.getByText('PUT');
