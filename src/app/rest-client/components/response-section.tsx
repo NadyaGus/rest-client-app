@@ -1,12 +1,21 @@
 import { isHttpCodeSuccess } from '@/utils/helpers';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Box, Button, Chip, TextField, Typography } from '@mui/material';
+import { getReasonPhrase } from 'http-status-codes';
 import { useMemo } from 'react';
 
 export const ResponseSection = ({ status, body }: { status: number; body: string }) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(body);
   };
+
+  const statusText = useMemo(() => {
+    try {
+      return status !== 0 ? getReasonPhrase(status) : '';
+    } catch {
+      return 'Unknown Status';
+    }
+  }, [status]);
 
   const formattedBody = useMemo(() => {
     try {
@@ -22,7 +31,7 @@ export const ResponseSection = ({ status, body }: { status: number; body: string
       {status === 0 && <Typography>Response</Typography>}
       {status !== 0 && (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Chip color={isHttpCodeSuccess(status) ? 'success' : 'error'} label={status} />
+          <Chip color={isHttpCodeSuccess(status) ? 'success' : 'error'} label={`${status} ${statusText}`} />
         </Box>
       )}
 

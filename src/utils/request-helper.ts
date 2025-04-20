@@ -8,6 +8,7 @@ interface RequestConfig {
 interface RequestResponse {
   status: number;
   body: string;
+  error?: string;
 }
 
 export async function sendRequest(config: RequestConfig): Promise<RequestResponse> {
@@ -37,12 +38,9 @@ export async function sendRequest(config: RequestConfig): Promise<RequestRespons
 
   const responseData = await response.json();
 
-  if (!response.ok) {
-    throw new Error(responseData.error || 'Request failed');
-  }
-
   return {
     status: responseData.status,
     body: responseData.body,
+    error: responseData.error,
   };
 }

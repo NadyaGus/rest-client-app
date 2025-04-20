@@ -17,8 +17,7 @@ export function useVariables() {
       if (storedVariables) {
         setVariables(JSON.parse(storedVariables));
       }
-    } catch (err) {
-      console.error('Failed to parse variables from localStorage:', err);
+    } catch {
       localStorage.removeItem(VARIABLES_LOCAL_STORAGE_KEY);
       window.location.reload();
     } finally {
@@ -41,9 +40,8 @@ export function useVariables() {
       setVariables(newVariablesArray);
       localStorage.setItem(VARIABLES_LOCAL_STORAGE_KEY, JSON.stringify(newVariablesArray));
       setError(null);
-    } catch (err) {
+    } catch {
       setError('Failed to save variables');
-      console.error('Failed to save variables:', err);
     }
   };
 
@@ -53,9 +51,8 @@ export function useVariables() {
       setVariables(newVariablesArray);
       localStorage.setItem(VARIABLES_LOCAL_STORAGE_KEY, JSON.stringify(newVariablesArray));
       setError(null);
-    } catch (err) {
+    } catch {
       setError('Failed to delete variable');
-      console.error('Failed to delete variable:', err);
     }
   };
 

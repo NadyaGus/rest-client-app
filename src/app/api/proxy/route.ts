@@ -1,35 +1,29 @@
-import { NextResponse } from 'next/server';
+import { forwardRequest } from './proxy';
+import { proxyResponse } from './responses';
+import { validateProxyRequest, type ProxyRequest } from './validators';
 
 export async function POST(request: Request) {
   try {
-    const { url, method, body, headers } = await request.json();
+    const requestData: ProxyRequest = await request.json();
 
-    if (!url) {
-      return NextResponse.json({ error: 'URL is required' }, { status: 400 });
+    const validationError = validateProxyRequest(requestData);
+    if (validationError) {
+      return proxyResponse.error(validationError);
     }
 
-    const requestInit: RequestInit = {
-      method,
-      headers: {
-        ...headers,
-      },
-    };
+    const { url, method, headers, body } = requestData;
+    const result = await forwardRequest(url, method, headers, body);
 
-    if (method !== 'GET' && method !== 'HEAD' && body) {
-      requestInit.body = body;
+    if (result.error) {
+      return proxyResponse.error(result.error, result.status);
     }
 
-    const response = await fetch(url, requestInit);
-
-    return NextResponse.json({
-      status: response.status,
-      body: await response.text(),
-    });
+    return proxyResponse.success(result.status, result.body);
   } catch (error) {
-    console.error('Proxy error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal server error' },
-      { status: 500 }
+    return proxyResponse.error(
+      error instanceof Error
+        ? `Invalid request format: ${error.message}`
+        : 'Invalid request format. Please check your request data.'
     );
   }
 }
