@@ -1,5 +1,6 @@
 'use client';
 
+import { sendRequest } from '@/utils/request-helper';
 import { Button } from '@mui/material';
 
 export const SendButton = ({
@@ -23,38 +24,19 @@ export const SendButton = ({
         throw new Error('URL is required');
       }
 
-      const requestBody = JSON.stringify({
+      // TODO: replace variables in url, headers, body
+
+      const { status, body: responseBody } = await sendRequest({
         url,
         method,
         body,
-        headers: headers?.reduce(
-          (acc, header) => {
-            if (!header.name || !header.value) {
-              return acc;
-            }
-            acc[header.name.trim()] = header.value.trim();
-            return acc;
-          },
-          {} as Record<string, string>
-        ),
+        headers,
       });
 
-      const response = await fetch('/api/proxy', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: requestBody,
-      });
+      // TODO: save request to history
 
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.error || 'Request failed');
-      }
-
-      setStatus(responseData.status);
-      setResponseBody(responseData.body);
+      setStatus(status);
+      setResponseBody(responseBody);
     } catch (error) {
       setStatus(0);
       setResponseBody(error instanceof Error ? error.message : 'Request failed');
