@@ -1,5 +1,6 @@
 'use client';
 
+import { GenerateCodeSection } from '@/components/generate-code-section';
 import { HTTP_METHODS, ROUTES } from '@/constants';
 import { generateRestClientPageUrl } from '@/utils/helpers';
 import { Box } from '@mui/material';
@@ -56,6 +57,7 @@ export function RestClient({
       <RequestHeaders headers={headers} onHeadersChange={setHeaders} />
       <RequestBody body={body} onBodyChange={setBody} />
       <ResponseSection status={status} body={responseBody} />
+      <GenerateCodeSection method={selectedMethod} endpoint={url} body={body} />
     </Box>
   );
 }
