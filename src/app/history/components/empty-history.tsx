@@ -1,7 +1,7 @@
-import { ROUTES } from '@/constants';
-import { generateRestClientPageUrl } from '@/utils/helpers';
 import HistoryIcon from '@mui/icons-material/History';
-import { Box, Typography, Link, Paper, Stack } from '@mui/material';
+import { Box, Typography, Stack } from '@mui/material';
+
+import { HistoryItem } from './history-item';
 
 export const EmptyHistory = () => {
   const sampleEndpoints = [
@@ -51,43 +51,14 @@ export const EmptyHistory = () => {
 
       <Stack spacing={2} sx={{ width: '100%', maxWidth: 600 }}>
         {sampleEndpoints.map((endpoint) => (
-          <Paper key={endpoint.id} elevation={1} sx={{ p: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Typography
-                variant="caption"
-                sx={{
-                  bgcolor: 'success.main',
-                  color: 'white',
-                  px: 1,
-                  py: 0.5,
-                  borderRadius: 1,
-                  fontWeight: 'bold',
-                }}
-              >
-                {endpoint.method}
-              </Typography>
-              <Link
-                href={generateRestClientPageUrl({
-                  baseUrl: ROUTES.restClient.href,
-                  method: endpoint.method,
-                  url: endpoint.url,
-                  body: '',
-                  headers: endpoint.headers || [],
-                })}
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  color: 'primary.main',
-                  textDecoration: 'none',
-                  '&:hover': {
-                    textDecoration: 'underline',
-                  },
-                }}
-              >
-                {endpoint.title}
-              </Link>
-            </Box>
-          </Paper>
+          <HistoryItem
+            key={endpoint.id}
+            id={endpoint.id}
+            title={endpoint.title}
+            url={endpoint.url}
+            method={endpoint.method}
+            headers={endpoint.headers}
+          />
         ))}
       </Stack>
     </Box>
