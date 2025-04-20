@@ -76,7 +76,7 @@ export const SendButton = ({
 
   return (
     <Button type="submit" variant="contained" color="primary" onClick={handleClick}>
-      Submit
+      Send
     </Button>
   );
 };
