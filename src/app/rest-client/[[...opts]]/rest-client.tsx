@@ -6,12 +6,12 @@ import { Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { RequestBody } from '../components/RequestBody';
-import { RequestHeaders } from '../components/RequestHeaders';
-import { RequestMethod } from '../components/RequestMethod';
-import { RequestUrl } from '../components/RequestUrl';
-import { ResponseSection } from '../components/ResponseSection';
-import { SendButton } from '../components/SendButton';
+import { RequestBody } from '../components/request-body';
+import { RequestHeaders } from '../components/request-headers';
+import { RequestMethod } from '../components/request-method';
+import { RequestUrl } from '../components/request-url';
+import { ResponseSection } from '../components/response-section';
+import { SendButton } from '../components/send-button';
 
 export function RestClient({
   initValues,
@@ -51,6 +51,9 @@ export function RestClient({
           headers={headers}
           setStatus={setStatus}
           setResponseBody={setResponseBody}
+          setUrl={setUrl}
+          setBody={setBody}
+          setHeaders={setHeaders}
         />
       </Box>
       <RequestHeaders headers={headers} onHeadersChange={setHeaders} />
