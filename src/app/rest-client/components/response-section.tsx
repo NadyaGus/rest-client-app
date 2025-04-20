@@ -55,7 +55,7 @@ export const ResponseSection = ({ status, body }: { status: number; body: string
         value={formattedBody}
         slotProps={{
           input: {
-            style: { fontFamily: 'monospace', fontSize: '12px' },
+            style: { fontFamily: 'monospace', fontSize: '14px' },
           },
         }}
       />
