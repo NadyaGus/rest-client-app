@@ -7,6 +7,7 @@ interface RequestHistory {
   method: string;
   body: string;
   headers: Array<{ name: string; value: string }>;
+  status: number;
   timestamp: number;
 }
 
@@ -27,6 +28,7 @@ export const HistoryList = ({ history }: HistoryListProps) => {
           url={request.url}
           method={request.method}
           headers={request.headers}
+          status={request.status}
         />
       ))}
     </Box>
