@@ -4,6 +4,8 @@ import { useVariables } from '@/hooks/use-variables';
 import { sendRequest } from '@/utils/request-helper';
 import { Button } from '@mui/material';
 
+import { useHistory } from '../hooks/use-history';
+
 export const SendButton = ({
   url,
   method,
@@ -28,6 +30,7 @@ export const SendButton = ({
   setHeaders: (headers: Array<{ name: string; value: string }>) => void;
 }) => {
   const { replaceVariables } = useVariables();
+  const { saveRequest } = useHistory();
 
   const handleClick = async () => {
     try {
@@ -57,7 +60,12 @@ export const SendButton = ({
         headers: headersWithVariables,
       });
 
-      // TODO: save request to history
+      saveRequest({
+        url: urlWithVariables,
+        method,
+        body: bodyWithVariables,
+        headers: headersWithVariables,
+      });
 
       setStatus(status);
       setResponseBody(responseBody);
