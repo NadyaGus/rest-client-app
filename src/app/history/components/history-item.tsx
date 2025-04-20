@@ -35,8 +35,6 @@ export const HistoryItem = ({ id, title, url, method, headers }: HistoryItemProp
             body: '',
             headers: headers || [],
           })}
-          target="_blank"
-          rel="noopener noreferrer"
           sx={{
             color: 'primary.main',
             textDecoration: 'none',

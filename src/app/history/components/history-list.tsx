@@ -1,4 +1,6 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
+
+import { HistoryItem } from './history-item';
 
 interface RequestHistory {
   url: string;
@@ -13,15 +15,20 @@ interface HistoryListProps {
 }
 
 export const HistoryList = ({ history }: HistoryListProps) => {
+  const sortedHistory = [...history].sort((a, b) => b.timestamp - a.timestamp);
+
   return (
-    <>
-      {history.map((request) => (
-        <Box key={request.timestamp}>
-          <Typography variant="h6" component="h2">
-            {request.url}
-          </Typography>
-        </Box>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      {sortedHistory.map((request) => (
+        <HistoryItem
+          key={request.timestamp}
+          id={request.timestamp}
+          title={request.url}
+          url={request.url}
+          method={request.method}
+          headers={request.headers}
+        />
       ))}
-    </>
+    </Box>
   );
 };
