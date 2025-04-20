@@ -2,7 +2,8 @@
 
 import { HTTP_METHODS, ROUTES } from '@/constants';
 import { generateRestClientPageUrl } from '@/utils/helpers';
-import { Box } from '@mui/material';
+import ErrorOutline from '@mui/icons-material/ErrorOutline';
+import { Alert, AlertTitle, Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -27,6 +28,7 @@ export function RestClient({
   );
   const [status, setStatus] = useState(0);
   const [responseBody, setResponseBody] = useState('');
+  const [responseError, setResponseError] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const updatedUrl = generateRestClientPageUrl({
@@ -51,6 +53,7 @@ export function RestClient({
           headers={headers}
           setStatus={setStatus}
           setResponseBody={setResponseBody}
+          setResponseError={setResponseError}
           setUrl={setUrl}
           setBody={setBody}
           setHeaders={setHeaders}
@@ -58,7 +61,13 @@ export function RestClient({
       </Box>
       <RequestHeaders headers={headers} onHeadersChange={setHeaders} />
       <RequestBody body={body} onBodyChange={setBody} />
-      <ResponseSection status={status} body={responseBody} />
+      {status !== 0 && <ResponseSection status={status} body={responseBody} />}
+      {responseError && (
+        <Alert variant="filled" icon={<ErrorOutline />} severity="error">
+          <AlertTitle>Could not send request</AlertTitle>
+          {responseError}
+        </Alert>
+      )}
     </Box>
   );
 }
