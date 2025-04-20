@@ -10,18 +10,21 @@ export const EmptyHistory = () => {
       title: 'Find out more about dogs breeds',
       url: 'https://dogapi.dog/api/v2/breeds',
       method: 'GET',
+      status: 200,
     },
     {
       id: 2,
       title: 'Find a pet to adopt',
       url: 'https://api.petfinder.com/v2/animals',
       method: 'GET',
+      status: 200,
     },
     {
       id: 3,
       title: 'Get a random cat image',
       url: 'https://api.thecatapi.com/v1/images/search?limit=20&breed_ids=beng',
       method: 'GET',
+      status: 200,
       headers: [
         {
           name: 'x-api-key',
@@ -58,6 +61,7 @@ export const EmptyHistory = () => {
             url={endpoint.url}
             method={endpoint.method}
             headers={endpoint.headers}
+            status={endpoint.status}
           />
         ))}
       </Stack>

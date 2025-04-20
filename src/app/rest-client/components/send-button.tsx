@@ -65,6 +65,7 @@ export const SendButton = ({
         method,
         body: bodyWithVariables,
         headers: headersWithVariables,
+        status,
       });
 
       setStatus(status);
