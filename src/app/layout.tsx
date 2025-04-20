@@ -1,3 +1,4 @@
+import ErrorBoundary from '@/components/error-boundary';
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import theme from '@/theme';
@@ -28,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 component={'main'}
                 sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flexGrow: 1 }}
               >
-                {children}
+                <ErrorBoundary>{children}</ErrorBoundary>
               </Box>
               <Footer />
             </Box>
