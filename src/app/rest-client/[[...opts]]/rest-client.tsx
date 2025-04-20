@@ -1,5 +1,6 @@
 'use client';
 
+import { GenerateCodeSection } from '@/components/generate-code-section';
 import { HTTP_METHODS, ROUTES } from '@/constants';
 import { generateRestClientPageUrl } from '@/utils/helpers';
 import ErrorOutline from '@mui/icons-material/ErrorOutline';
@@ -42,7 +43,17 @@ export function RestClient({
   }, [router, selectedMethod, url, body, headers]);
 
   return (
-    <Box sx={{ fontFamily: 'monospace', whiteSpace: 'pre', display: 'flex', gap: 2, flexDirection: 'column' }}>
+    <Box
+      sx={{
+        fontFamily: 'monospace',
+        whiteSpace: 'pre',
+        display: 'flex',
+        gap: 2,
+        flexDirection: 'column',
+        width: '100%',
+        maxWidth: '1000px',
+      }}
+    >
       <Box sx={{ display: 'flex', gap: 2 }}>
         <RequestMethod method={selectedMethod} onMethodChange={setSelectedMethod} />
         <RequestUrl url={url} onUrlChange={setUrl} />
@@ -68,6 +79,7 @@ export function RestClient({
           {responseError}
         </Alert>
       )}
+      <GenerateCodeSection method={selectedMethod} endpoint={url} body={body} headers={headers} />
     </Box>
   );
 }
