@@ -51,6 +51,9 @@ export function RestClient({
           headers={headers}
           setStatus={setStatus}
           setResponseBody={setResponseBody}
+          setUrl={setUrl}
+          setBody={setBody}
+          setHeaders={setHeaders}
         />
       </Box>
       <RequestHeaders headers={headers} onHeadersChange={setHeaders} />

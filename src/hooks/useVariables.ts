@@ -59,6 +59,18 @@ export function useVariables() {
     }
   };
 
+  const replaceVariables = (text?: string): string => {
+    if (!text) {
+      return '';
+    }
+
+    let result = text;
+    variables.forEach((variable) => {
+      result = result.replace(new RegExp(`{{${variable.name}}}`, 'g'), variable.value);
+    });
+    return result;
+  };
+
   return {
     variables,
     loading,
@@ -66,5 +78,6 @@ export function useVariables() {
     setError,
     addOrUpdateVariable,
     deleteVariable,
+    replaceVariables,
   };
 }
