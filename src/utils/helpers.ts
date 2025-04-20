@@ -63,3 +63,7 @@ export const generateRestClientPageUrl = ({ baseUrl, method, url, body, headers 
   }
   return updatedUrl;
 };
+
+export const isHttpCodeSuccess = (code: number) => {
+  return code < 400;
+};

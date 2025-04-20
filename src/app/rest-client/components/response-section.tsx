@@ -1,6 +1,6 @@
+import { isHttpCodeSuccess } from '@/utils/helpers';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { Box, Button, TextField, Typography } from '@mui/material';
-
+import { Box, Button, Chip, TextField, Typography } from '@mui/material';
 export const ResponseSection = ({ status, body }: { status: number; body: string }) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(body);
@@ -8,10 +8,10 @@ export const ResponseSection = ({ status, body }: { status: number; body: string
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography>Response</Typography>
-        <Typography sx={{ visibility: status === 0 ? 'hidden' : 'visible' }}>Status: {status}</Typography>
-      </Box>
+      <Typography>
+        {status === 0 ? 'Response' : <Chip color={isHttpCodeSuccess(status) ? 'success' : 'error'} label={status} />}
+      </Typography>
+
       <TextField
         multiline
         minRows={4}
