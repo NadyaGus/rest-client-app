@@ -4,6 +4,7 @@ import { Box, Container, Typography } from '@mui/material';
 
 import { useHistory } from '../rest-client/hooks/use-history';
 import { EmptyHistory } from './components/empty-history';
+import { HistoryList } from './components/history-list';
 
 export const HistoryContent = () => {
   const { history } = useHistory();
@@ -14,17 +15,7 @@ export const HistoryContent = () => {
         <Typography variant="h4" component="h1" align="center">
           History
         </Typography>
-        {history && history.length > 0 ? (
-          history.map((request) => (
-            <Box key={request.timestamp}>
-              <Typography variant="h6" component="h2">
-                {request.url}
-              </Typography>
-            </Box>
-          ))
-        ) : (
-          <EmptyHistory />
-        )}
+        {history && history.length > 0 ? <HistoryList history={history} /> : <EmptyHistory />}
       </Box>
     </Container>
   );
