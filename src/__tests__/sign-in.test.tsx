@@ -126,7 +126,7 @@ describe('SignInPage', () => {
     await waitFor(() => {
       expect(screen.getByLabelText(/email/i)).toBeDisabled();
       expect(screen.getByLabelText(/password/i)).toBeDisabled();
-      expect(screen.getByRole('button', { name: /signing in/i })).toBeDisabled();
+      expect(screen.getByRole('button', { name: /signingin/i })).toBeDisabled();
     });
   });
 });

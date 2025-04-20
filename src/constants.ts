@@ -27,7 +27,7 @@ export const ROUTES: Record<`${Routes}`, { href: string; title: string }> = {
   },
   restClient: {
     href: '/rest-client',
-    title: 'RESTful Client',
+    title: 'Client',
   },
   variables: {
     href: '/variables',
@@ -39,9 +39,11 @@ export const ROUTES: Record<`${Routes}`, { href: string; title: string }> = {
   },
 } as const;
 
+export const APP_NAME = 'RESTful Client App';
 export const AUTH_ROUTES = [ROUTES.signIn.href, ROUTES.signUp.href];
 export const PUBLIC_ROUTES = [ROUTES.main.href, ...AUTH_ROUTES];
 export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'];
 export const VARIABLES_LOCAL_STORAGE_KEY = 'variables';
 export const HISTORY_LOCAL_STORAGE_KEY = 'rest_client_history';
 export const HISTORY_MAX_ITEMS_IN_LS = 50;
+export const LOCALE_COOKIE_NAME = 'LOCALE';

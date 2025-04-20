@@ -22,6 +22,14 @@ vi.mock('@mui/material-nextjs/v15-appRouter', () => ({
   ),
 }));
 
+vi.mock('next-intl', () => ({
+  useLocale: vi.fn(() => 'en'),
+  useTranslations: vi.fn(() => vi.fn()),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="intl-provider">{children}</div>
+  ),
+}));
+
 vi.mock('@mui/material/styles', () => ({
   createTheme: vi.fn(() => ({})),
   ThemeProvider: ({ children }: { children: React.ReactNode }) => <div data-testid="theme-provider">{children}</div>,
@@ -35,10 +43,11 @@ describe('RootLayout', () => {
       </RootLayout>
     );
 
-    expect(screen.getByRole('heading', { name: 'RESTful Client' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'RESTful Client App' })).toBeInTheDocument();
     expect(screen.getByTestId('content')).toBeInTheDocument();
 
     expect(screen.getByTestId('theme-provider')).toBeInTheDocument();
+    expect(screen.getByTestId('intl-provider')).toBeInTheDocument();
     expect(screen.getByTestId('cache-provider')).toBeInTheDocument();
 
     const html = document.documentElement;

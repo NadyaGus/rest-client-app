@@ -13,17 +13,17 @@ describe('VariablesContent Component', () => {
   test('renders the Variables Content', () => {
     render(<VariablesContent />);
     expect(screen.getByText('Variables')).toBeInTheDocument();
-    expect(screen.getByLabelText('Name')).toBeInTheDocument();
-    expect(screen.getByLabelText('Value')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Add variable' })).toBeInTheDocument();
+    expect(screen.getByLabelText('name')).toBeInTheDocument();
+    expect(screen.getByLabelText('value')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'addVariable' })).toBeInTheDocument();
   });
 
   test('adds a new variable to the grid and local storage', async () => {
     render(<VariablesContent />);
 
-    const nameInput = screen.getByLabelText('Name');
-    const valueInput = screen.getByLabelText('Value');
-    const addButton = screen.getByRole('button', { name: 'Add variable' });
+    const nameInput = screen.getByLabelText('name');
+    const valueInput = screen.getByLabelText('value');
+    const addButton = screen.getByRole('button', { name: 'addVariable' });
 
     fireEvent.change(nameInput, { target: { value: 'testName' } });
     fireEvent.change(valueInput, { target: { value: 'testValue' } });
@@ -39,9 +39,9 @@ describe('VariablesContent Component', () => {
   test('shows error messages when name or value are empty', async () => {
     render(<VariablesContent />);
 
-    const nameInput = screen.getByLabelText('Name');
-    const valueInput = screen.getByLabelText('Value');
-    const addButton = screen.getByRole('button', { name: 'Add variable' });
+    const nameInput = screen.getByLabelText('name');
+    const valueInput = screen.getByLabelText('value');
+    const addButton = screen.getByRole('button', { name: 'addVariable' });
 
     fireEvent.change(nameInput, { target: { value: '' } });
     fireEvent.change(valueInput, { target: { value: '' } });
@@ -67,9 +67,9 @@ describe('VariablesContent Component', () => {
     localStorage.setItem(VARIABLES_LOCAL_STORAGE_KEY, '[{"name":"testName","value":"oldValue"}]');
     render(<VariablesContent />);
 
-    const nameInput = screen.getByLabelText('Name');
-    const valueInput = screen.getByLabelText('Value');
-    const addButton = screen.getByRole('button', { name: 'Add variable' });
+    const nameInput = screen.getByLabelText('name');
+    const valueInput = screen.getByLabelText('value');
+    const addButton = screen.getByRole('button', { name: 'addVariable' });
 
     fireEvent.change(nameInput, { target: { value: 'testName' } });
     fireEvent.change(valueInput, { target: { value: 'newValue' } });
@@ -85,7 +85,7 @@ describe('VariablesContent Component', () => {
     localStorage.setItem(VARIABLES_LOCAL_STORAGE_KEY, '[{"name":"testName","value":"testValue"}]');
     render(<VariablesContent />);
 
-    const deleteButton = screen.getByLabelText('Delete');
+    const deleteButton = screen.getByLabelText('deleteVariable');
     fireEvent.click(deleteButton);
 
     await waitFor(() => {

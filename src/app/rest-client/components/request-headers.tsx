@@ -1,5 +1,6 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, IconButton, Input } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 interface Header {
   name: string;
@@ -12,6 +13,7 @@ interface RequestHeadersProps {
 }
 
 export function RequestHeaders({ headers, onHeadersChange }: RequestHeadersProps) {
+  const t = useTranslations('Client');
   const handleHeaderChange = (index: number, field: 'name' | 'value', value: string) => {
     const newRows = [...headers];
     newRows[index][field] = value;
@@ -38,13 +40,13 @@ export function RequestHeaders({ headers, onHeadersChange }: RequestHeadersProps
       {headers.map((row, index) => (
         <Box key={index} sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <Input
-            placeholder="Header name"
+            placeholder={t('headerName')}
             value={row.name}
             onChange={(e) => handleHeaderChange(index, 'name', e.target.value)}
             sx={{ width: 200 }}
           />
           <Input
-            placeholder="Header value"
+            placeholder={t('headerValue')}
             value={row.value}
             onChange={(e) => handleHeaderChange(index, 'value', e.target.value)}
             sx={{ flexGrow: 1 }}

@@ -1,4 +1,5 @@
 import { VARIABLES_LOCAL_STORAGE_KEY } from '@/constants';
+import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 
 interface Variable {
@@ -7,6 +8,7 @@ interface Variable {
 }
 
 export function useVariables() {
+  const t = useTranslations('Variables');
   const [variables, setVariables] = useState<Variable[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -41,7 +43,7 @@ export function useVariables() {
       localStorage.setItem(VARIABLES_LOCAL_STORAGE_KEY, JSON.stringify(newVariablesArray));
       setError(null);
     } catch {
-      setError('Failed to save variables');
+      setError(t('saveVariablesFailed'));
     }
   };
 
@@ -52,7 +54,7 @@ export function useVariables() {
       localStorage.setItem(VARIABLES_LOCAL_STORAGE_KEY, JSON.stringify(newVariablesArray));
       setError(null);
     } catch {
-      setError('Failed to delete variable');
+      setError(t('deleteVariableFailed'));
     }
   };
 

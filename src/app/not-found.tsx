@@ -1,9 +1,11 @@
 'use client';
 
 import { Button, Container, Stack, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 
 export default function NotFound() {
+  const t = useTranslations('NotFound');
   const router = useRouter();
 
   return (
@@ -13,13 +15,13 @@ export default function NotFound() {
           404
         </Typography>
         <Typography variant="h3" color="text.secondary">
-          Page Not Found
+          {t('title')}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          The page you&apos;re looking for doesn&apos;t exist or has been moved.
+          {t('description')}
         </Typography>
         <Button variant="contained" size="large" onClick={() => router.push('/')} sx={{ mt: 2 }}>
-          Return Home
+          {t('returnHome')}
         </Button>
       </Stack>
     </Container>

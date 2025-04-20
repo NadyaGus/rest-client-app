@@ -1,53 +1,51 @@
+import { APP_NAME } from '@/constants';
 import { ArrowDropDownCircleOutlined } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
+const developers = [
+  { name: 'Nadya', link: 'https://github.com/NadyaGus' },
+  { name: 'Murad', link: 'https://github.com/davydovmurad' },
+  { name: 'Oleg', link: 'https://github.com/osulyanov' },
+];
+
 export const MainPageInfo = () => {
+  const t = useTranslations('MainPageInfo');
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', my: 4, maxWidth: '600px' }}>
       <Accordion>
-        <AccordionSummary expandIcon={<ArrowDropDownCircleOutlined />}>About Project</AccordionSummary>
+        <AccordionSummary expandIcon={<ArrowDropDownCircleOutlined />}>{t('aboutTitle')}</AccordionSummary>
         <AccordionDetails>
           <Typography variant="body1" color="text.secondary">
-            RESTful Client App is a simple and user-friendly tool for interacting with RESTful APIs. It allows you to
-            explore, create, update, and delete data from an API.
+            {t('aboutDescription', { appName: APP_NAME })}
           </Typography>
         </AccordionDetails>
       </Accordion>
 
       <Accordion>
-        <AccordionSummary expandIcon={<ArrowDropDownCircleOutlined />}>Developed by</AccordionSummary>
+        <AccordionSummary expandIcon={<ArrowDropDownCircleOutlined />}>{t('developedByTitle')}</AccordionSummary>
         <AccordionDetails sx={{ display: 'flex', gap: 2 }}>
-          <Typography variant="body1" color="text.secondary" align="center">
-            <Link href="https://github.com/NadyaGus" target="_blank">
-              Nadya Gusakova
-            </Link>
-          </Typography>
-
-          <Typography variant="body1" color="text.secondary" align="center">
-            <Link href="https://github.com/davydovmurad" target="_blank">
-              Murad Davydov
-            </Link>
-          </Typography>
-
-          <Typography variant="body1" color="text.secondary" align="center">
-            <Link href="https://github.com/osulyanov" target="_blank">
-              Oleg Sulyanov
-            </Link>
-          </Typography>
+          {developers.map((developer) => (
+            <Typography key={developer.name} variant="body1" color="text.secondary" align="center">
+              <Link href={developer.link} target="_blank">
+                {t(developer.name)}
+              </Link>
+            </Typography>
+          ))}
         </AccordionDetails>
       </Accordion>
 
       <Accordion>
-        <AccordionSummary expandIcon={<ArrowDropDownCircleOutlined />}>About Course</AccordionSummary>
+        <AccordionSummary expandIcon={<ArrowDropDownCircleOutlined />}>{t('aboutCourseTitle')}</AccordionSummary>
         <AccordionDetails>
           <Typography component={'p'} variant="body1" color="text.secondary">
-            This project was created as part of the{' '}
+            {t('aboutCourseDescription1')}
             <Link href="https://rs.school/courses/reactjs" target="_blank">
               RS School
-            </Link>{' '}
-            React course. This is a free course for web developers. Everyone can study at RS School, regardless of age,
-            professional employment, or place of residence.
+            </Link>
+            {t('aboutCourseDescription2')}
           </Typography>
         </AccordionDetails>
       </Accordion>

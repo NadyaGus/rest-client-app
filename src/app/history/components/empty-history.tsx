@@ -1,27 +1,29 @@
 import HistoryIcon from '@mui/icons-material/History';
 import { Box, Typography, Stack } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 import { HistoryItem } from './history-item';
 
 export const EmptyHistory = () => {
+  const t = useTranslations('History');
   const sampleEndpoints = [
     {
       id: 1,
-      title: 'Find out more about dogs breeds',
+      title: t('dogsBreeds'),
       url: 'https://dogapi.dog/api/v2/breeds',
       method: 'GET',
       status: 200,
     },
     {
       id: 2,
-      title: 'Find a pet to adopt',
+      title: t('petAdopt'),
       url: 'https://api.petfinder.com/v2/animals',
       method: 'GET',
       status: 200,
     },
     {
       id: 3,
-      title: 'Get a random cat image',
+      title: t('catImage'),
       url: 'https://api.thecatapi.com/v1/images/search?limit=20&breed_ids=beng',
       method: 'GET',
       status: 200,
@@ -46,10 +48,10 @@ export const EmptyHistory = () => {
     >
       <HistoryIcon sx={{ fontSize: 60, color: 'text.secondary' }} />
       <Typography variant="h5" component="h2" color="text.primary">
-        No Request History Yet
+        {t('empty')}
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
-        Try out these sample API endpoints to get started:
+        {t('try')}
       </Typography>
 
       <Stack spacing={2} sx={{ width: '100%', maxWidth: 600 }}>

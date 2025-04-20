@@ -5,6 +5,7 @@ import { HTTP_METHODS, ROUTES } from '@/constants';
 import { generateRestClientPageUrl } from '@/utils/helpers';
 import ErrorOutline from '@mui/icons-material/ErrorOutline';
 import { Alert, AlertTitle, Box } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -20,6 +21,7 @@ export function RestClient({
 }: {
   initValues: { method: string; url: string; body: string; headers: Array<{ name: string; value: string }> };
 }) {
+  const t = useTranslations('Client');
   const router = useRouter();
   const [selectedMethod, setSelectedMethod] = useState(initValues.method || HTTP_METHODS[0]);
   const [url, setUrl] = useState(initValues.url || '');
@@ -75,7 +77,7 @@ export function RestClient({
       {status !== 0 && <ResponseSection status={status} body={responseBody} />}
       {responseError && (
         <Alert variant="filled" icon={<ErrorOutline />} severity="error">
-          <AlertTitle>Could not send request</AlertTitle>
+          <AlertTitle>{t('Could not send request')}</AlertTitle>
           {responseError}
         </Alert>
       )}

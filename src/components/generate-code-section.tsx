@@ -1,5 +1,6 @@
 import { generateLanguageCode } from '@/utils/generate-code';
 import { Alert, Box, Button, MenuItem, Select, TextField } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 const languages = [
@@ -23,6 +24,7 @@ export const GenerateCodeSection = ({
   body: string;
   headers: { name: string; value: string }[];
 }) => {
+  const t = useTranslations('Client');
   const [language, setLanguage] = useState(languages[0].name);
   const [variant, setVariant] = useState('---');
   const [variants, setVariants] = useState(languages[0].variant);
@@ -57,7 +59,7 @@ export const GenerateCodeSection = ({
       setResult(data);
       setIsError(false);
     } catch (error) {
-      setIsError(error instanceof Error ? error.message : 'Failed to generate code');
+      setIsError(error instanceof Error ? error.message : t('Failed to generate code'));
     }
   };
 
@@ -97,7 +99,7 @@ export const GenerateCodeSection = ({
         </Select>
 
         <Button variant="outlined" onClick={handleClick} disabled={variant === '---'}>
-          Generate Code
+          {t('generateCode')}
         </Button>
       </Box>
 

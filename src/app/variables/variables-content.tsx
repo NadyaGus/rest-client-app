@@ -2,18 +2,20 @@
 
 import { useVariables } from '@/hooks/use-variables';
 import { Alert, Box, Container, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 import { VariableForm } from './components/variable-form';
 import { VariableGrid } from './components/variable-grid';
 
 export function VariablesContent() {
+  const t = useTranslations('Routes');
   const { variables, loading, error, setError, addOrUpdateVariable, deleteVariable } = useVariables();
 
   return (
     <Container maxWidth="md">
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4, py: 4 }}>
         <Typography variant="h4" component="h1" align="center">
-          Variables
+          {t('Variables')}
         </Typography>
 
         {error && (

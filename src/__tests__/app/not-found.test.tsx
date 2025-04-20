@@ -22,15 +22,15 @@ describe('NotFound', () => {
     render(<NotFound />);
 
     expect(screen.getByText('404')).toBeInTheDocument();
-    expect(screen.getByText('Page Not Found')).toBeInTheDocument();
-    expect(screen.getByText("The page you're looking for doesn't exist or has been moved.")).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Return Home' })).toBeInTheDocument();
+    expect(screen.getByText('title')).toBeInTheDocument();
+    expect(screen.getByText('description')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'returnHome' })).toBeInTheDocument();
   });
 
   test('clicking Return Home button navigates to home page', () => {
     render(<NotFound />);
 
-    const [homeButton] = screen.getAllByRole('button', { name: 'Return Home' });
+    const [homeButton] = screen.getAllByRole('button', { name: 'returnHome' });
     homeButton.click();
 
     expect(mockPush).toHaveBeenCalledWith('/');
