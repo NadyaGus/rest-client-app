@@ -1,5 +1,5 @@
 import { generateLanguageCode } from '@/utils/generate-code';
-import { Box, Button, MenuItem, Select, TextField } from '@mui/material';
+import { Alert, Box, Button, MenuItem, Select, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 const languages = [
@@ -14,23 +14,32 @@ const languages = [
 
 export const GenerateCodeSection = ({ endpoint, method, body }: { endpoint: string; method: string; body: string }) => {
   const [language, setLanguage] = useState(languages[0].name);
-  const [variant, setVariant] = useState(languages[0].variant[0]);
+  const [variant, setVariant] = useState('---');
+  const [variants, setVariants] = useState(languages[0].variant);
   const [result, setResult] = useState('');
+  const [isError, setIsError] = useState<false | string>(false);
 
   useEffect(() => {
-    setVariant(languages.find((l) => l.name === language)?.variant[0] ?? languages[0].variant[0]);
+    setVariant('---');
+    setVariants(languages.find((l) => l.name === language)?.variant || []);
   }, [language]);
 
-  const handleClick = async () => {
+  const handleClick = () => {
     const request = {
       language,
       variant,
       endpoint,
       method,
-      body: body.trim() ? JSON.parse(body) : undefined,
+      body,
     };
-    const data = await generateLanguageCode(request);
-    setResult(data);
+
+    try {
+      const data = generateLanguageCode(request);
+      setResult(data);
+      setIsError(false);
+    } catch (error) {
+      setIsError(error instanceof Error ? error.message : 'Failed to generate code');
+    }
   };
 
   return (
@@ -51,20 +60,33 @@ export const GenerateCodeSection = ({ endpoint, method, body }: { endpoint: stri
           ))}
         </Select>
 
-        <Select value={variant} onChange={(e) => setVariant(e.target.value)} size="small" sx={{ minWidth: 200 }}>
-          {languages
-            .find((l) => l.name === language)
-            ?.variant.map((v) => (
-              <MenuItem key={v} value={v}>
-                {v}
-              </MenuItem>
-            ))}
+        <Select
+          value={variant}
+          defaultValue=""
+          onChange={(e) => {
+            setVariant(e.target.value);
+          }}
+          size="small"
+          sx={{ minWidth: 200 }}
+        >
+          <MenuItem value="---">---</MenuItem>
+          {variants.map((v) => (
+            <MenuItem key={v} value={v}>
+              {v}
+            </MenuItem>
+          ))}
         </Select>
 
-        <Button variant="outlined" onClick={handleClick}>
+        <Button variant="outlined" onClick={handleClick} disabled={variant === '---'}>
           Generate Code
         </Button>
       </Box>
+
+      {isError && (
+        <Alert severity="error" sx={{ mt: 2 }}>
+          {isError}
+        </Alert>
+      )}
 
       {result && <TextField multiline sx={{ fontFamily: 'monospace' }} value={result} fullWidth />}
     </Box>
