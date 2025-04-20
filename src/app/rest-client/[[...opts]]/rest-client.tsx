@@ -43,7 +43,17 @@ export function RestClient({
   }, [router, selectedMethod, url, body, headers]);
 
   return (
-    <Box sx={{ fontFamily: 'monospace', whiteSpace: 'pre', display: 'flex', gap: 2, flexDirection: 'column' }}>
+    <Box
+      sx={{
+        fontFamily: 'monospace',
+        whiteSpace: 'pre',
+        display: 'flex',
+        gap: 2,
+        flexDirection: 'column',
+        width: '100%',
+        maxWidth: '1000px',
+      }}
+    >
       <Box sx={{ display: 'flex', gap: 2 }}>
         <RequestMethod method={selectedMethod} onMethodChange={setSelectedMethod} />
         <RequestUrl url={url} onUrlChange={setUrl} />

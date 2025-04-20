@@ -10,5 +10,5 @@ export function RequestUrl({ url, onUrlChange }: RequestUrlProps) {
     onUrlChange(event.target.value);
   };
 
-  return <Input sx={{ width: 800 }} value={url} onChange={handleChangeUrl} autoFocus placeholder="Enter URL" />;
+  return <Input fullWidth value={url} onChange={handleChangeUrl} autoFocus placeholder="Enter URL" />;
 }
