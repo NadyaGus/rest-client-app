@@ -1,6 +1,6 @@
 import type { ProxyResponse } from './responses';
 
-import { handleFetchError } from './errorHandling';
+import { handleFetchError } from './error-handling';
 
 export async function forwardRequest(
   url: string,
