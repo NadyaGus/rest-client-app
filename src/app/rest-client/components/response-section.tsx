@@ -1,10 +1,21 @@
 import { isHttpCodeSuccess } from '@/utils/helpers';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Box, Button, Chip, TextField, Typography } from '@mui/material';
+import { useMemo } from 'react';
+
 export const ResponseSection = ({ status, body }: { status: number; body: string }) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(body);
   };
+
+  const formattedBody = useMemo(() => {
+    try {
+      const parsed = JSON.parse(body);
+      return JSON.stringify(parsed, null, 2);
+    } catch {
+      return body;
+    }
+  }, [body]);
 
   return (
     <Box>
@@ -23,7 +34,6 @@ export const ResponseSection = ({ status, body }: { status: number; body: string
         size="small"
         sx={{
           mt: 2,
-          fontFamily: 'monospace',
           '& .MuiInputBase-input.Mui-disabled': {
             WebkitTextFillColor: '#fff',
             color: '#fff',
@@ -33,10 +43,10 @@ export const ResponseSection = ({ status, body }: { status: number; body: string
           },
         }}
         disabled
-        value={body}
+        value={formattedBody}
         slotProps={{
           input: {
-            style: { fontFamily: 'monospace' },
+            style: { fontFamily: 'monospace', fontSize: '12px' },
           },
         }}
       />

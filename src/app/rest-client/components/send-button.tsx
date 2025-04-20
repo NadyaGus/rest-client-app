@@ -1,4 +1,5 @@
-import { isValidJson } from '@/utils/helpers';
+'use client';
+
 import { Button } from '@mui/material';
 
 export const SendButton = ({
@@ -22,53 +23,39 @@ export const SendButton = ({
         throw new Error('URL is required');
       }
 
-      const request: RequestInit = {
+      const requestBody = JSON.stringify({
+        url,
         method,
-      };
-
-      const isBodySupported = method !== 'GET' && method !== 'HEAD';
-      if (body && isBodySupported) {
-        request.body = body;
-
-        const contentType = isValidJson(body) ? 'application/json' : 'text/plain';
-        const isCustomContentTypeSet = headers?.some((h) => h.name.toLowerCase() === 'content-type');
-        if (!isCustomContentTypeSet) {
-          request.headers = {
-            ...request.headers,
-            'Content-Type': contentType,
-          };
-        }
-      }
-
-      if (headers) {
-        request.headers = {
-          ...request.headers,
-          ...headers.reduce(
-            (acc, header) => {
-              if (!header.name || !header.value) {
-                return acc;
-              }
-              acc[header.name.trim()] = header.value.trim();
+        body,
+        headers: headers?.reduce(
+          (acc, header) => {
+            if (!header.name || !header.value) {
               return acc;
-            },
-            {} as Record<string, string>
-          ),
-        };
+            }
+            acc[header.name.trim()] = header.value.trim();
+            return acc;
+          },
+          {} as Record<string, string>
+        ),
+      });
+
+      const response = await fetch('/api/proxy', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: requestBody,
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.error || 'Request failed');
       }
 
-      const response = await fetch(url, request);
-      const responseText = await response.text();
-
-      try {
-        const jsonResponse = JSON.parse(responseText);
-        setResponseBody(JSON.stringify(jsonResponse, null, 2));
-      } catch {
-        setResponseBody(responseText);
-      }
-
-      setStatus(response.status);
+      setStatus(responseData.status);
+      setResponseBody(responseData.body);
     } catch (error) {
-      console.error('Request failed:', error);
       setStatus(0);
       setResponseBody(error instanceof Error ? error.message : 'Request failed');
     }
