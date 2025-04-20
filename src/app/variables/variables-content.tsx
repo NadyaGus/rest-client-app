@@ -1,10 +1,11 @@
 'use client';
 
-import { VariableForm } from '@/components/variable-form';
-import { VariableGrid } from '@/components/variable-grid';
 import { VARIABLES_LOCAL_STORAGE_KEY } from '@/constants';
 import { Alert, Box, Container, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+
+import { VariableForm } from './components/variable-form';
+import { VariableGrid } from './components/variable-grid';
 
 interface Variable {
   name: string;
