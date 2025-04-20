@@ -1,4 +1,5 @@
 'use client';
+import { MainPageInfo } from '@/components/main-page-info';
 import { ROUTES } from '@/constants';
 import { useAuth } from '@/hooks/use-auth';
 import { Box, Button, Container, Skeleton, Typography } from '@mui/material';
@@ -11,7 +12,7 @@ export default function Home() {
   const links = [ROUTES.restClient, ROUTES.variables, ROUTES.history];
 
   return (
-    <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+    <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, py: 6 }}>
       <Typography variant="h1" component="h1" sx={{ m: 2, fontSize: '3rem', textAlign: 'center' }}>
         {loading && <Skeleton variant="text" sx={{ fontSize: '3rem', width: '400px' }} />}
         {!loading && (user ? 'Welcome Back, ' + userName + '!' : 'Welcome to RESTful Client App.')}
@@ -45,6 +46,8 @@ export default function Home() {
           ))}
         </Box>
       )}
+
+      <MainPageInfo />
     </Container>
   );
 }

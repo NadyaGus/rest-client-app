@@ -10,6 +10,15 @@ export const encodeStringToBase64 = (str: string) => {
   return Buffer.from(str, 'utf-8').toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 };
 
+export const isValidJson = (str: string): boolean => {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export const serializeHeadersQueryString = (headers: Array<{ name: string; value: string }>) => {
   const validHeaders = headers
     .filter((row) => row.name && row.value)
@@ -53,4 +62,8 @@ export const generateRestClientPageUrl = ({ baseUrl, method, url, body, headers 
     updatedUrl += headersQueryString;
   }
   return updatedUrl;
+};
+
+export const isHttpCodeSuccess = (code: number) => {
+  return code < 400;
 };

@@ -3,16 +3,17 @@
 import { GenerateCodeSection } from '@/components/generate-code-section';
 import { HTTP_METHODS, ROUTES } from '@/constants';
 import { generateRestClientPageUrl } from '@/utils/helpers';
-import { Box } from '@mui/material';
+import ErrorOutline from '@mui/icons-material/ErrorOutline';
+import { Alert, AlertTitle, Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { RequestBody } from '../components/RequestBody';
-import { RequestHeaders } from '../components/RequestHeaders';
-import { RequestMethod } from '../components/RequestMethod';
-import { RequestUrl } from '../components/RequestUrl';
-import { ResponseSection } from '../components/ResponseSection';
-import { SendButton } from '../components/SendButton';
+import { RequestBody } from '../components/request-body';
+import { RequestHeaders } from '../components/request-headers';
+import { RequestMethod } from '../components/request-method';
+import { RequestUrl } from '../components/request-url';
+import { ResponseSection } from '../components/response-section';
+import { SendButton } from '../components/send-button';
 
 export function RestClient({
   initValues,
@@ -28,6 +29,7 @@ export function RestClient({
   );
   const [status, setStatus] = useState(0);
   const [responseBody, setResponseBody] = useState('');
+  const [responseError, setResponseError] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const updatedUrl = generateRestClientPageUrl({
@@ -52,11 +54,21 @@ export function RestClient({
           headers={headers}
           setStatus={setStatus}
           setResponseBody={setResponseBody}
+          setResponseError={setResponseError}
+          setUrl={setUrl}
+          setBody={setBody}
+          setHeaders={setHeaders}
         />
       </Box>
       <RequestHeaders headers={headers} onHeadersChange={setHeaders} />
       <RequestBody body={body} onBodyChange={setBody} />
-      <ResponseSection status={status} body={responseBody} />
+      {status !== 0 && <ResponseSection status={status} body={responseBody} />}
+      {responseError && (
+        <Alert variant="filled" icon={<ErrorOutline />} severity="error">
+          <AlertTitle>Could not send request</AlertTitle>
+          {responseError}
+        </Alert>
+      )}
       <GenerateCodeSection method={selectedMethod} endpoint={url} body={body} />
     </Box>
   );
