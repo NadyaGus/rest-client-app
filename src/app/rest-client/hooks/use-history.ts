@@ -1,4 +1,4 @@
-import { HISTORY_LOCAL_STORAGE_KEY } from '@/constants';
+import { HISTORY_LOCAL_STORAGE_KEY, HISTORY_MAX_ITEMS_IN_LS } from '@/constants';
 import { useState, useEffect } from 'react';
 
 interface RequestHistory {
@@ -29,7 +29,7 @@ export const useHistory = () => {
       timestamp: Date.now(),
     };
 
-    const updatedHistory = [newRequest, ...history].slice(0, 50); // Keep last 50 requests
+    const updatedHistory = [newRequest, ...history].slice(0, HISTORY_MAX_ITEMS_IN_LS);
     setHistory(updatedHistory);
     localStorage.setItem(HISTORY_LOCAL_STORAGE_KEY, JSON.stringify(updatedHistory));
   };
